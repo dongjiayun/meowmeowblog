@@ -12,12 +12,20 @@ const blog = [
     {
         path: '/blog',
         name: 'blog',
-        component: () => import('@/views/blog/index.vue')
+        component: () => import('@/views/blog/index.vue'),
+        meta: {
+            keepAlive: true
+        }
     },
     {
         path: '/blog-h5',
         name: 'blog-h5',
         component: () => import('@/views/blog/blogH5.vue')
+    },
+    {
+        path: '/blog/detail/:id',
+        name: 'blog-detail',
+        component: () => import('@/views/blog/detail.vue')
     }
 ]
 

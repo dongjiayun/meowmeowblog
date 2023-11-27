@@ -18,13 +18,6 @@ import VConsole from 'vconsole'
 
 const app = createApp(App)
 
-// @ts-ignore
-if (import.meta.env.VITE_APP_CURRENTMODE !== 'prod') {
-    const vConsole = new VConsole()
-    // @ts-ignore
-    app.use(vConsole)
-}
-
 app.use(createPinia())
 app.use(router)
 app.use(global)

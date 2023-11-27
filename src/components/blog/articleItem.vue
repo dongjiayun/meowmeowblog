@@ -1,11 +1,11 @@
 <template>
-    <div class="article-item">
+    <div class="article-item" @click="handleDetail">
         <el-image class="article-item-cover" :src="cover" />
         <div class="article-item-info">
             <div class="article-item-info-header">
                 <el-image :src="avatar" class="article-item-info-header-avatar" />
                 <div class="article-item-info-header-name">{{ authorName }}</div>
-                <div class="article-item-info-header-date">{{ moment(data.createdAt).format('YYYY-MM-DD HH:mm:ss') }}</div>
+                <div class="article-item-info-header-date">发表于 {{ moment(data.createdAt).format('YYYY-MM-DD HH:mm:ss') }}</div>
             </div>
             <div class="article-item-info-title">{{ data.title }}</div>
             <div class="article-item-info-extendinfo">
@@ -30,6 +30,9 @@
 import { computed } from 'vue'
 import { getRandomCover, toThousandsNum } from '@/utils'
 import moment from 'moment'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const props = defineProps < {
     data: Article
@@ -46,6 +49,16 @@ const avatar = computed(() => {
 const authorName = computed(() => {
     return props.data.author?.username || '匿名猫猫'
 })
+
+const handleDetail = () => {
+    router.push({
+        name: 'blog-detail',
+        params: {
+            id: props.data.articleId
+        }
+    })
+}
+
 </script>
 
 <style scoped lang="scss">

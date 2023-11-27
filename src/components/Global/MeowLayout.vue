@@ -18,12 +18,20 @@
         <div :class="{ 'meow-layout-main': currentRouteName !== 'home' }">
             <slot />
         </div>
-        <el-backtop :bottom="100" />
+        <el-backtop :bottom="60" />
+        <div
+            v-if="enableBack"
+            class="meow-layout-back"
+            @click="handleBack"
+        >
+            <el-icon :size="30" color="#FFAA2C"><ArrowLeft /></el-icon>
+            <div>返回</div>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { getSrc } from '@/utils'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -35,6 +43,12 @@ const currentRouteName = computed(() => {
     return route.name
 })
 
+const enableBack = ref(false)
+
+watch(route, () => {
+    enableBack.value = history.state.position > 1 && currentRouteName.value !== 'home'
+})
+
 const menus = ref([
     { name: '博客', route: 'blog' },
     { name: '博客mobile', route: 'blog-h5' },
@@ -44,6 +58,10 @@ const handleHome = () => {
     router.push({
         name: 'home'
     })
+}
+
+const handleBack = () => {
+    router.back()
 }
 </script>
 
@@ -102,6 +120,25 @@ const handleHome = () => {
         border-radius: 20px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         padding: 20px;
+    }
+    &-back{
+        position: fixed;
+        left: 40px;
+        top:100px;
+        padding: 10px 20px;
+        border-radius: 20px;
+        background: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #FFAA2C;
+        font-size: 32px;
+        cursor: pointer;
+        transition: .1s;
+        &:hover{
+            transform: scale(1.1);
+        }
     }
 }
 </style>

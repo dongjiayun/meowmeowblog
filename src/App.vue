@@ -4,27 +4,18 @@
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover"
     />
     <meow-layout>
-        <RouterView v-if="keepAliveRoutes.includes(route.name)" v-slot="{ Component }">
-            <KeepAlive>
+        <router-view v-slot="{ Component }">
+            <keep-alive include="Blog">
                 <component :is="Component" />
-            </KeepAlive>
-        </RouterView>
-        <RouterView v-else />
+            </keep-alive>
+        </router-view>
     </meow-layout>
 </template>
 
 <script setup lang="ts">
-import { RouterView, useRoute, useRouter } from 'vue-router'
-import { ref, watch } from 'vue'
+import { RouterView, useRoute } from 'vue-router'
 
 const route = useRoute()
-const keepAliveRoutes = ref < Array < any >>([])
-watch(route, () => {
-    if (!keepAliveRoutes.value.includes(route.name) && route.meta?.keepAlive) {
-        keepAliveRoutes.value.push(route.name)
-    }
-})
-
 
 </script>
 
