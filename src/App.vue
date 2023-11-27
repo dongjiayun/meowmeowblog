@@ -17,6 +17,10 @@ import { RouterView, useRoute } from 'vue-router'
 
 const route = useRoute()
 
+if (/Mobi|Android|iPhone/i.test(navigator.userAgent)) {
+    window.location.href = 'https://club.meowmeowmeow.cn'
+}
+
 </script>
 
 <style lang="scss" scoped>
