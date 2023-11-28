@@ -17,10 +17,22 @@ import { RouterView, useRoute } from 'vue-router'
 
 const route = useRoute()
 
-if (/Mobi|Android|iPhone/i.test(navigator.userAgent)) {
-    window.location.href = 'https://club.meowmeowmeow.cn'
+const handleResize = () => {
+    if (window.self !== window.top) {
+        window.location.href = 'https://club.meowmeowmeow.cn'
+        return
+    }
+    const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
+    if (width < 768) {
+        window.location.href = 'https://club.meowmeowmeow.cn'
+    }
 }
 
+handleResize()
+
+window.addEventListener('resize', () => {
+    handleResize()
+})
 </script>
 
 <style lang="scss" scoped>
