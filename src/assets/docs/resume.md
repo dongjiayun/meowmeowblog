@@ -8,7 +8,7 @@
 等基础研发工作。主导开发 ssr 官网。主导开发盟宠商城小程序等小程序矩阵。主导开
 发盟宠 h5 商城，等项目。长期工作于一线，实战经验丰富。
 > 熟练掌握JavaScript,TypeScript,Vue2,Vue3,Nuxt.js,Sass,微信小程序等开发。
-> 拥有丰富的cicd已经nginx部署经验.可以全流程开发部署大型项目.
+> 拥有丰富的jenkins以及nginx部署经验.可以全流程开发部署大型项目.
 
 ---
 
@@ -100,3 +100,7 @@
 ---
 ## 英语水平
 > 大学英语六级
+
+## 个人主页
+> - [github:https://github.com/dongjiayun](https://github.com/dongjiayun)
+> - [个人博客:https://club.meowmeowmeow.cn](https://club.meowmeowmeow.cn)
