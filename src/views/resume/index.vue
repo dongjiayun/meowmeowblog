@@ -154,6 +154,7 @@ onMounted(async() => {
         &-qrcode{
             width: 360px;
             height: 500px;
+            margin-bottom: 20px;
         }
     }
 }
