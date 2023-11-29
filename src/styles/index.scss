@@ -1,2 +1,11 @@
 @import "./page";
 @import "./font";
+@import "github-markdown-css";
+
+.markdown-body{
+    padding: 20px;
+    img{
+        width: 100px;
+        height: 100px;
+    }
+}

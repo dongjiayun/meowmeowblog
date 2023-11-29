@@ -5,7 +5,7 @@
     />
     <meow-layout>
         <router-view v-slot="{ Component }">
-            <keep-alive include="Blog">
+            <keep-alive :include="keepAlive">
                 <component :is="Component" />
             </keep-alive>
         </router-view>
@@ -14,9 +14,11 @@
 
 <script setup lang="ts">
 import { RouterView, useRoute } from 'vue-router'
+import { ref } from 'vue'
 
 const route = useRoute()
 
+const keepAlive = ref(['Blog', 'Resume'])
 const handleResize = () => {
     if (window.self !== window.top) {
         window.location.href = 'https://club.meowmeowmeow.cn'

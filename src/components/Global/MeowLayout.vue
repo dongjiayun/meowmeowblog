@@ -52,6 +52,7 @@ watch(route, () => {
 const menus = ref([
     { name: '博客', route: 'blog' },
     { name: '博客mobile', route: 'blog-h5' },
+    { name: '简历', route: 'resume' }
 ])
 
 const handleHome = () => {

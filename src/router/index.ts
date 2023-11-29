@@ -29,9 +29,18 @@ const blog = [
     }
 ]
 
+const resume = [
+    {
+        path: '/resume',
+        name: 'resume',
+        component: () => import('@/views/resume/index.vue')
+    }
+]
+
 const routes: Array<any> = [
     ...base,
     ...blog,
+    ...resume,
 ]
 
 const router = createRouter({

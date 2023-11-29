@@ -13,7 +13,7 @@ export default defineConfig({
         port: 3100,
         proxy: {
             '/api': {
-                target: 'https://o82q217872.zicp.fun',
+                target: 'https://www.meowmeowmeow.cn',
                 changeOrigin: true,
                 rewrite: path => path.replace(/^\/api/, ''),
             }

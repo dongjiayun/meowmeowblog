@@ -5,6 +5,7 @@ import type { Param, Dicts } from '@/types/base.d.ts'
 import { useAppStore } from '@/stores/app'
 // @ts-ignore
 import { CommonModel } from '@/api'
+import moment from 'moment'
 
 interface dictProp {
     value:string,
@@ -270,4 +271,24 @@ export function convertBase64ToBlob(base64:string) {
 export const getRandomCover = () => {
     const index = round(random(0, 4))
     return `https://qa-res.ipetapi.com/meowmeowmeow/placeholders/${index}.png`
+}
+
+export const commonExport = ({
+    fileName,
+    uniqueFileName = true,
+    type,
+    file,
+}: {
+    fileName: string;
+    uniqueFileName?: boolean;
+    type: string;
+    file: BlobPart;
+}) => {
+    const blob = new Blob([file])
+    const _fileName = `${fileName + (uniqueFileName ? moment().format('YYYY-MM-DD HH:mm:ss') : '')}.${type}`
+    const link = document.createElement('a')
+    link.href = window.URL.createObjectURL(blob)
+    link.download = _fileName
+    link.click()
+    window.URL.revokeObjectURL(link.href)
 }
