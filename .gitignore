@@ -30,4 +30,4 @@ coverage
 
 name
 
-/config/secret.ts
+/src/config/secret.ts
