@@ -102,5 +102,5 @@
 > 大学英语六级
 
 ## 个人主页
-> - [github:https://github.com/dongjiayun](https://github.com/dongjiayun)
-> - [个人博客:https://club.meowmeowmeow.cn](https://club.meowmeowmeow.cn)
+> - [github: https://github.com/dongjiayun](https://github.com/dongjiayun)
+> - [个人博客: https://club.meowmeowmeow.cn](https://club.meowmeowmeow.cn)

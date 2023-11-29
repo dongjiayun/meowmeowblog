@@ -6,6 +6,7 @@ import { useAppStore } from '@/stores/app'
 // @ts-ignore
 import { CommonModel } from '@/api'
 import moment from 'moment'
+import { ElMessage } from 'element-plus'
 
 interface dictProp {
     value:string,
@@ -291,4 +292,26 @@ export const commonExport = ({
     link.download = _fileName
     link.click()
     window.URL.revokeObjectURL(link.href)
+}
+
+export const copy = (content:string, message = '复制成功', alert = true) => {
+    // content为要复制的内容
+    // 创建元素用于复制
+    const ele = document.createElement('input')
+    // 设置元素内容
+    ele.setAttribute('value', content)
+    // 将元素插入页面进行调用
+    document.body.appendChild(ele)
+    // 复制内容
+    ele.select()
+    // 将内容复制到剪贴板
+    document.execCommand('copy')
+    // 删除创建元素
+    document.body.removeChild(ele)
+    if (alert) {
+        ElMessage({
+            message,
+            type: 'success'
+        })
+    }
 }

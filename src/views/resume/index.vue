@@ -1,6 +1,7 @@
 <template>
     <div v-if="hasPassed" class="blog-resume ">
         <div class="blog-resume-header">
+            <el-button size="large" @click="handleShare">分享链接</el-button>
             <el-button size="large" type="primary" @click="handleDownload">下载</el-button>
         </div>
         <div id="content" class="markdown-body">
@@ -8,7 +9,10 @@
         </div>
     </div>
     <div v-else class="blog-resume">
-        <div class="blog-resume-button" @click="checkPassword">申请访问</div>
+        <div class="blog-resume-apply">
+            <el-image class="blog-resume-apply-qrcode" :src="getSrc('docs/qrcode.jpg')" />
+            <div class="blog-resume-button" @click="checkPassword">申请访问</div>
+        </div>
     </div>
 </template>
 
@@ -19,7 +23,7 @@ export default {
 </script>
 <script setup lang="ts">
 import { MD5 } from 'crypto-js'
-import { getSrc, commonExport } from '@/utils'
+import { getSrc, commonExport, copy } from '@/utils'
 import { onMounted, ref } from 'vue'
 // @ts-ignore
 import MarkdownIt from 'markdown-it'
@@ -27,6 +31,13 @@ import { ElMessageBox, ElMessage } from 'element-plus'
 import moment from 'moment'
 import { resumeKey } from '@/config/secret'
 import html2canvas from 'html2canvas'
+import { useRoute, useRouter } from 'vue-router'
+
+const route = useRoute()
+
+const router = useRouter()
+
+const routePassword = route.query?.password
 
 const markdown = new MarkdownIt()
 
@@ -35,6 +46,7 @@ const content = ref('')
 const hasPassed = ref(false)
 
 const getContent = async() => {
+    hasPassed.value = true
     const response = await fetch(getSrc('docs/resume.md'))
     if (response.ok) {
         const data = await response.text()
@@ -45,8 +57,14 @@ const getContent = async() => {
 }
 
 const checkPassword = () => {
+    if (hasPassed.value) {
+        return getContent()
+    }
     const secret = resumeKey
     const password = MD5(secret + moment().format('MMDD')).toString()
+    if (routePassword && routePassword === password) {
+        return getContent()
+    }
     return new Promise(resolve => {
         ElMessageBox.prompt('请输入邀请码', '邀请码', {
             confirmButtonText: '确认',
@@ -55,7 +73,6 @@ const checkPassword = () => {
             .then(({ value }) => {
                 if (value === password) {
                     resolve(true)
-                    hasPassed.value = true
                     getContent()
                 } else {
                     ElMessage({
@@ -90,6 +107,16 @@ const handleDownload = () => {
     })
 }
 
+const handleShare = () => {
+    const { href } = router.resolve({
+        name: 'resume',
+        query: {
+            password: MD5(resumeKey + moment().format('MMDD')).toString()
+        }
+    })
+    copy(window.origin + href, '复制成功,链接一日内有效')
+}
+
 onMounted(async() => {
     await checkPassword()
 })
@@ -106,10 +133,6 @@ onMounted(async() => {
         height: 60px;
     }
     &-button{
-        position: absolute;
-        top:50%;
-        left: 50%;
-        transform: translate(-50%,-50%);
         padding:10px 20px;
         border-radius: 20px;
         font-size: 32px;
@@ -120,7 +143,17 @@ onMounted(async() => {
         transition: all 0.1s;
         &:hover{
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-            transform: translate(-50%,-50%)  scale(1.1);
+            transform:  scale(1.1);
+        }
+    }
+    &-apply{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        &-qrcode{
+            width: 360px;
+            height: 500px;
         }
     }
 }
