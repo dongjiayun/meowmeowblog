@@ -1,8 +1,18 @@
 <template>
     <div v-if="hasPassed" class="blog-resume ">
         <div class="blog-resume-header">
-            <el-button size="large" @click="handleShare">分享链接</el-button>
-            <el-button size="large" type="primary" @click="handleDownload">下载</el-button>
+            <el-button size="large" style="margin-right: 10px" @click="handleShare">分享链接</el-button>
+            <el-dropdown>
+                <el-button size="large" type="primary">
+                    下载<el-icon class="el-icon--right"><arrow-down /></el-icon>
+                </el-button>
+                <template #dropdown>
+                    <el-dropdown-menu>
+                        <el-dropdown-item @click="handleDownload('doc')">doc文件</el-dropdown-item>
+                        <el-dropdown-item @click="handleDownload('jpg')">jpg文件</el-dropdown-item>
+                    </el-dropdown-menu>
+                </template>
+            </el-dropdown>
         </div>
         <div id="content" class="markdown-body">
             <div v-html="content" />
@@ -22,6 +32,7 @@ export default {
 }
 </script>
 <script setup lang="ts">
+// @ts-ignore
 import { MD5 } from 'crypto-js'
 import { getSrc, commonExport, copy } from '@/utils'
 import { onMounted, ref } from 'vue'
@@ -32,6 +43,8 @@ import moment from 'moment'
 import { resumeKey } from '@/config/secret'
 import html2canvas from 'html2canvas'
 import { useRoute, useRouter } from 'vue-router'
+// @ts-ignore
+import FileSaver from 'file-saver'
 
 const route = useRoute()
 
@@ -85,26 +98,38 @@ const checkPassword = () => {
     })
 }
 
-const handleDownload = () => {
+const handleDownload = type => {
     const dom = document.getElementById('content')
-    const width = dom.offsetWidth
-    const height = dom.offsetHeight
-    const scale = 6
-    html2canvas(dom, {
-        useCORS: true,
-        dpi: 350,
-        scale,
-        width: width,
-        heigth: height,
-    }).then(canvas => {
-        canvas.toBlob(file => {
-            commonExport({
-                fileName: '董嘉昀的简历',
-                type: 'jpg',
-                file
+    switch (type) {
+        case 'jpg':
+            const width = dom.offsetWidth
+            const height = dom.offsetHeight
+            const scale = 6
+            html2canvas(dom, {
+                useCORS: true,
+                dpi: 350,
+                scale,
+                width: width,
+                heigth: height,
+            }).then(canvas => {
+                canvas.toBlob(file => {
+                    commonExport({
+                        fileName: '董嘉昀的简历',
+                        type: 'jpg',
+                        file
+                    })
+                })
             })
-        })
-    })
+            break
+        case 'doc':
+            const imgElements = dom.querySelectorAll('img')
+            for (let i = 0; i < imgElements.length; i++) {
+                imgElements[i].remove()
+            }
+            const blob = new Blob([dom.innerHTML], { type: 'application/msword;charset=utf-8' })
+            // @ts-ignore
+            FileSaver.saveAs(blob, '董嘉昀的简历.doc')
+    }
 }
 
 const handleShare = () => {
