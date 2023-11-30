@@ -20,7 +20,7 @@
 > - h5 mall architecture, component library, and business development
 > - scattered demand technology and development support
 
-> #### 工作业绩:
+> #### Performance:
 >  - Led the construction of the company's management backend architecture, built a low-code configurable component library based on Element-UI, greatly simplified the development cycle and cost of the backend system, and improved code consistency and readability.
 >  - Led the implementation of the micro-frontend architecture for the backend management system and connected it to the unified authorization system.
 >  - Led the development of the approval center for the process center.
@@ -50,7 +50,7 @@
 > - Responsible for the development and maintenance of the Macalline Aijia broker PC-side housing resources and transaction product lines.
 > - Responsible for the development and maintenance of the h5 real estate resource and transaction product line for the Meikailong Aijia brokerage platform.
 
-#### 工作业绩:
+#### Performance:
 > - With the unremitting efforts of colleagues, the 30-person team has achieved more than 90% of the functionality and usability of the products of hundreds of competitors, providing technical support for nearly 10,000 broker teams.
 ---
 
@@ -60,10 +60,10 @@
 > - Responsible for the development, setup, and maintenance of the group's self-built component library sw-ui. Based on element-ui secondary development.
 > - Responsible for the development and maintenance of cloud platform products
 
-#### 工作业绩:
+#### Performance:
 > - Completed the development and construction of the new educational administration platform of NPU
 
-#### 成绩:
+#### Achievements:
 > - Won the 2019 Outstanding Employee Award of New Cape Group
 
 ---
@@ -75,7 +75,7 @@
 > - Responsible for the frontend development of Tianyi live h5, management backend.
 > - Responsible for the frontend development of other to b businesses.
 
-#### 成绩:
+#### Achievements:
 > - Won the "Little Bee Award" in 2017.
 
 ---
