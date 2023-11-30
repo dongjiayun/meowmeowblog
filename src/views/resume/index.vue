@@ -1,6 +1,16 @@
 <template>
     <div v-if="hasPassed" class="blog-resume ">
         <div class="blog-resume-header">
+            <el-switch
+                v-model="lang"
+                inline-prompt
+                style="--el-switch-on-color: #FFAA2C; --el-switch-off-color: #FFAA2C;margin-right: 10px"
+                active-text="中"
+                inactive-text="EN"
+                active-value="zh"
+                inactive-value="en"
+                @change="handleChangeLang"
+            />
             <el-button size="large" style="margin-right: 10px" @click="handleShare">分享链接</el-button>
             <el-dropdown>
                 <el-button size="large" type="primary">
@@ -58,9 +68,11 @@ const content = ref('')
 
 const hasPassed = ref(false)
 
+const lang = ref('zh')
+
 const getContent = async() => {
     hasPassed.value = true
-    const response = await fetch(getSrc('docs/resume.md'))
+    const response = await fetch(getSrc(lang.value === 'zh' ? 'docs/resume.md' : 'docs/resume-en.md'))
     if (response.ok) {
         const data = await response.text()
         content.value = markdown.render(data)
@@ -140,6 +152,10 @@ const handleShare = () => {
         }
     })
     copy(window.origin + href, '复制成功,链接一日内有效')
+}
+
+const handleChangeLang = () => {
+    getContent()
 }
 
 onMounted(async() => {
