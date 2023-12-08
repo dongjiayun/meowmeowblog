@@ -12,3 +12,5 @@ export const percentRate = /(^100$)|(^100\.0$)|(^100\.00$)|(^\d{1,2}(\.\d{1,2})?
 
 export const number = /^([0-9]{0,9})(\.\d{1,2})?$/
 
+export const Password = /^(?=.*[a-zA-Z])(?=.*\\d)[a-zA-Z0-9!@#$%^&*()_+{}|:;"\'<>,.?/~`]{6,20}$/
+

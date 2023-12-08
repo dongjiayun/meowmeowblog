@@ -7,7 +7,7 @@ import { useAppStore } from '@/stores/app'
 
 export const useUserStore = defineStore('user', {
     state: () => ({
-        jwtToken: '',
+        token: '',
         refreshToken: '',
         userId: '',
         openId: '',
@@ -19,20 +19,16 @@ export const useUserStore = defineStore('user', {
     actions: {
         setUserInfo(data?: HFLUser) {
             if (data) {
-                this.jwtToken = data.jwtToken
+                this.token = data.token
                 this.refreshToken = data.refreshToken
-                this.userId = data.haofuliUserId
-                this.openId = data.haofuliOpenId
                 this.phoneNum = data.phoneNum
                 this.cid = data.cid
                 this.platNo = data.platNo
             } else {
                 const userInfoCache = Local.get('pa_userinfo')
                 if (userInfoCache) {
-                    this.jwtToken = userInfoCache.jwtToken
+                    this.token = userInfoCache.token
                     this.refreshToken = userInfoCache.refreshToken
-                    this.userId = userInfoCache.haofuliUserId
-                    this.openId = userInfoCache.haofuliOpenId
                     this.phoneNum = userInfoCache.phoneNum
                     this.cid = userInfoCache.cid
                     this.platNo = userInfoCache.platNo
@@ -40,10 +36,8 @@ export const useUserStore = defineStore('user', {
             }
         },
         logout() {
-            this.jwtToken = ''
+            this.token = ''
             this.refreshToken = ''
-            this.userId = ''
-            this.openId = ''
             this.phoneNum = ''
             this.cid = ''
             this.platNo = ''
@@ -78,12 +72,12 @@ export const useUserStore = defineStore('user', {
                 Loading.show()
                 return AuthModel.haofuli_refresh().then(res => {
                     if (res.status === 0) {
-                        this.jwtToken = res.data
+                        this.token = res.data
                         let userInfoCache = Local.get('pa_userinfo')
                         if (!userInfoCache) {
                             userInfoCache = {}
                         }
-                        userInfoCache.jwtToken = res.data
+                        userInfoCache.token = res.data
                         Local.set('pa_userinfo', userInfoCache)
                         window.location.reload()
                     } else {

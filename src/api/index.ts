@@ -6,11 +6,23 @@ interface ApiModel{
 
 export const AuthModel:ApiModel = {
     login(data) {
-        return post('/ka/haofuli/auth/login', data)
+        return post('/auth/signIn', data)
     },
-    refresh(data) {
-        return get('/ka/haofuli/auth/token/refresh', data)
+    refresh() {
+        return post('/auth/refreshToken')
     },
+    sendEmailOtp(data) {
+        return post('/auth/sendEmailOtp', data)
+    },
+    logout() {
+        return post('/auth/signOut')
+    },
+    resetPassword(data) {
+        return post('/auth/resetPassword', data)
+    },
+    findbackPassword(data) {
+        return post('/auth/findbackPassword', data)
+    }
 }
 
 export const CommonModel = {

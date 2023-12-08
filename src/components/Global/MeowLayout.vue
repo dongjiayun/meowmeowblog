@@ -1,5 +1,5 @@
 <template>
-    <div class="meow-layout">
+    <div id="layout" class="meow-layout">
         <div class="meow-layout-header">
             <div class="meow-layout-header-logo" @click="handleHome">
                 <el-image class="meow-layout-header-logo-image" :src="getSrc('base/logo.jpg')" />
@@ -13,6 +13,14 @@
                     :class="{ active: currentRouteName === item.route }"
                     @click="$router.push({ name: item.route })"
                 >{{ item.name }}</div>
+            </div>
+            <div class="meow-layout-header-profile">
+                <div v-if="jwtToken">
+                    登出
+                </div>
+                <div v-else>
+                    登录
+                </div>
             </div>
         </div>
         <div :class="{ 'meow-layout-main': currentRouteName !== 'home' }">
@@ -34,6 +42,11 @@
 import { computed, ref, watch } from 'vue'
 import { getSrc } from '@/utils'
 import { useRoute, useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/user'
+import { storeToRefs } from 'pinia'
+
+const userStore = useUserStore()
+const jwtToken = storeToRefs(userStore).jwtToken
 
 const route = useRoute()
 
@@ -109,6 +122,12 @@ const handleBack = () => {
                     font-size: 26px;
                 }
             }
+        }
+        &-profile{
+            font-size: 28px;
+            font-weight: bold;
+            margin-left: 8px;
+            color: #FFAA2C;
         }
     }
     &-main{

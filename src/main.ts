@@ -14,8 +14,6 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 import Longpress from '@/directives/longpress'
 
-import VConsole from 'vconsole'
-
 const app = createApp(App)
 
 app.use(createPinia())

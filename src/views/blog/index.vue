@@ -10,17 +10,18 @@
             </transition-group>
         </div>
         <div class="blog-footer">
-            <el-pagination
-                v-model:current-page="pageNo"
-                v-model:page-size="pageSize"
-                background
-                layout="prev, pager, next, sizes, jumper"
-                :total="totalNum"
-                @current-change="handlePageNo"
-                @size-change="handlePageSize"
-            />
+            <el-button v-if="!noMore" type="primary" @click="handleLoadmore">加载更多~</el-button>
         </div>
     </div>
+    <Teleport to="#layout">
+        <el-backtop
+            :visibility-height="0"
+            :bottom="120"
+            @click="handleAdd"
+        >
+            <el-icon><Plus /></el-icon>
+        </el-backtop>
+    </Teleport>
 </template>
 <script lang="ts">
 export default {
@@ -33,12 +34,14 @@ import { onMounted, ref } from 'vue'
 import { pagination } from '@/mixins/pagination'
 import { ElLoading, ElMessage } from 'element-plus'
 import articleItem from '@/components/blog/articleItem.vue'
+import { checkLogin } from '@/utils/auth'
 
 const {
     pageNo,
     pageSize,
-    totalNum,
 } = pagination()
+
+const noMore = ref(false)
 
 const list = ref<Array<Article>>([])
 
@@ -61,8 +64,10 @@ const getData = () => {
     })
     articleModel.list(params).then(res => {
         if (res.status === 0) {
-            list.value = res.data.list
-            totalNum.value = res.data.totalCount || 0
+            list.value = [...list.value, ...res.data.list]
+            if (res.data.list.length === 0 || res.data.list.length < pageSize.value) {
+                noMore.value = true
+            }
         } else {
             ElMessage({
                 type: 'error',
@@ -74,16 +79,17 @@ const getData = () => {
     })
 }
 
-const handlePageNo = no => {
-    pageNo.value = no
-    list.value = []
+const handleLoadmore = () => {
+    if (noMore.value) {
+        return
+    }
+    pageNo.value++
     getData()
 }
 
-const handlePageSize = size => {
-    pageSize.value = size
-    list.value = []
-    getData()
+const handleAdd = async() => {
+    console.log('handleAdd')
+    await checkLogin()
 }
 
 </script>
@@ -94,6 +100,7 @@ const handlePageSize = size => {
         display: flex;
         align-items: center;
         justify-content: center;
+        margin-top: 20px;
     }
 }
 </style>
