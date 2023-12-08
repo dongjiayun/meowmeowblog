@@ -76,6 +76,7 @@ import { ref } from 'vue'
 import { Email } from '@/utils/valids'
 import { AuthModel } from '@/api'
 import { ElLoading, ElMessage } from 'element-plus'
+import { useUserStore } from '@/stores/user'
 
 const loginType = ref('emailWithPassword')
 
@@ -169,6 +170,8 @@ const handleSendOtp = async() => {
     })
 }
 
+const userStore = useUserStore()
+
 const handleLogin = async() => {
     if (loginType.value === 'emailWithPassword') {
         await passwordFormRef.value.validate()
@@ -188,6 +191,7 @@ const handleLogin = async() => {
                     message: '登陆成功'
                 })
                 dialogVisible.value = false
+                userStore.setUserInfo(res.data)
             } else {
                 ElMessage({
                     type: 'error',
@@ -216,6 +220,7 @@ const handleLogin = async() => {
                     message: '登陆成功'
                 })
                 dialogVisible.value = false
+                userStore.setUserInfo(res.data)
             } else {
                 ElMessage({
                     type: 'error',

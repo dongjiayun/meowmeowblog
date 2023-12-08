@@ -3,68 +3,51 @@ import { Loading } from '@/utils'
 import { AuthModel } from '@/api'
 import { ElMessage } from 'element-plus'
 import { Local } from '@/utils/storage'
-import { useAppStore } from '@/stores/app'
 
 export const useUserStore = defineStore('user', {
     state: () => ({
         token: '',
         refreshToken: '',
-        userId: '',
-        openId: '',
-        phoneNum: '',
+        phone: '',
         cid: '',
-        platNo: '',
-        hasShowHomepageAlert: false
+        username: '',
+        avatar: '',
+        email: ''
     }),
     actions: {
-        setUserInfo(data?: HFLUser) {
+        setUserInfo(data?: User) {
             if (data) {
                 this.token = data.token
                 this.refreshToken = data.refreshToken
-                this.phoneNum = data.phoneNum
+                this.phone = data.phone
                 this.cid = data.cid
-                this.platNo = data.platNo
+                this.username = data.username
+                this.avatar = data.avatar?.fileUrl
+                this.email = data.email
+                Local.set('pa_userinfo', data)
             } else {
                 const userInfoCache = Local.get('pa_userinfo')
                 if (userInfoCache) {
                     this.token = userInfoCache.token
                     this.refreshToken = userInfoCache.refreshToken
-                    this.phoneNum = userInfoCache.phoneNum
+                    this.phone = userInfoCache.phone
                     this.cid = userInfoCache.cid
-                    this.platNo = userInfoCache.platNo
+                    this.username = userInfoCache.username
+                    this.avatar = userInfoCache.avatar?.fileUrl
+                    this.email = userInfoCache.email
                 }
             }
         },
         logout() {
-            this.token = ''
-            this.refreshToken = ''
-            this.phoneNum = ''
-            this.cid = ''
-            this.platNo = ''
-        },
-        login() {
-            const appStore = useAppStore()
-            const userInfo = Local.get('pa_userinfo')
-            if (userInfo) {
-                this.setUserInfo(userInfo)
-                return Promise.resolve()
-            }
-            const authCode = appStore.authCode
-            const hasAuthCode = authCode && Object.keys(authCode).length > 0
-            Loading.show()
-            const params = {
-                authToken: hasAuthCode ? authCode : '123'
-            }
-            return AuthModel.haofuli_login(params).then(res => {
-                if (res.status === 0) {
-                    this.setUserInfo(res.data)
-                    Local.set('pa_userinfo', res.data)
-                    window.location.reload()
-                } else {
-                    ElMessage(res.message)
-                }
-            }).finally(() => {
-                Loading.close()
+            AuthModel.logout().finally(() => {
+                this.token = ''
+                this.refreshToken = ''
+                this.phone = ''
+                this.cid = ''
+                this.username = ''
+                this.avatar = ''
+                this.email = ''
+                Local.remove('pa_userinfo')
             })
         },
         refresh() {

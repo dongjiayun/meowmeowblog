@@ -15,10 +15,10 @@
                 >{{ item.name }}</div>
             </div>
             <div class="meow-layout-header-profile">
-                <div v-if="jwtToken">
-                    登出
+                <div v-if="token" class="meow-layout-header-profile-inner" @click="handleLogout">
+                    <el-avatar v-if="avatar" style="margin-right: 8px" :src="avatar" />{{ username }}
                 </div>
-                <div v-else>
+                <div v-else @click="handleLogin">
                     登录
                 </div>
             </div>
@@ -44,9 +44,11 @@ import { getSrc } from '@/utils'
 import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import { storeToRefs } from 'pinia'
+import { ElMessageBox } from 'element-plus'
+import { checkLogin } from '@/utils/auth'
 
 const userStore = useUserStore()
-const jwtToken = storeToRefs(userStore).jwtToken
+const token = storeToRefs(userStore).token
 
 const route = useRoute()
 
@@ -76,6 +78,18 @@ const handleHome = () => {
 
 const handleBack = () => {
     router.back()
+}
+
+const { username, avatar } = storeToRefs(userStore)
+
+const handleLogin = () => {
+    checkLogin()
+}
+
+const handleLogout = () => {
+    ElMessageBox.confirm('是否退出登录?', '登出').then(() => {
+        userStore.logout()
+    })
 }
 </script>
 
@@ -128,6 +142,11 @@ const handleBack = () => {
             font-weight: bold;
             margin-left: 8px;
             color: #FFAA2C;
+            cursor: pointer;
+            &-inner{
+                display: flex;
+                align-items: center;
+            }
         }
     }
     &-main{

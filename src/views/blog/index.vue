@@ -14,13 +14,12 @@
         </div>
     </div>
     <Teleport to="#layout">
-        <el-backtop
-            :visibility-height="0"
-            :bottom="120"
+        <div
+            class="blog-fixed-button"
             @click="handleAdd"
         >
             <el-icon><Plus /></el-icon>
-        </el-backtop>
+        </div>
     </Teleport>
 </template>
 <script lang="ts">
@@ -46,14 +45,10 @@ const noMore = ref(false)
 const list = ref<Array<Article>>([])
 
 onMounted(() => {
-    console.log('onMounted')
     getData()
 })
 
 const getData = () => {
-    window.scroll({
-        top: 0
-    })
     const params = {
         pageNo: pageNo.value,
         pageSize: pageSize.value
@@ -88,7 +83,6 @@ const handleLoadmore = () => {
 }
 
 const handleAdd = async() => {
-    console.log('handleAdd')
     await checkLogin()
 }
 
@@ -101,6 +95,21 @@ const handleAdd = async() => {
         align-items: center;
         justify-content: center;
         margin-top: 20px;
+    }
+    &-fixed-button{
+        position: fixed;
+        right: 40px;
+        bottom:120px;
+        width: 40px;
+        height: 40px;
+        border-radius: 60px;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #FFAA2C;
+        box-shadow:  var(--el-box-shadow-lighter);
+        cursor: pointer;
     }
 }
 </style>

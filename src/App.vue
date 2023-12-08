@@ -18,6 +18,7 @@ import { RouterView, useRoute } from 'vue-router'
 import { ref } from 'vue'
 import Login from '@/components/blog/login.vue'
 import Bus from '@/utils/bus'
+import { useUserStore } from '@/stores/user'
 
 const loginRef = ref()
 
@@ -44,6 +45,10 @@ window.addEventListener('resize', () => {
 Bus.on('login', () => {
     loginRef.value.open()
 })
+
+const userStore = useUserStore()
+userStore.setUserInfo()
+
 </script>
 
 <style lang="scss" scoped>
