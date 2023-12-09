@@ -28,7 +28,7 @@
         <div
             class="blog-detail-body"
             :class="{ 'markdown-body': data?.isMarkdown }"
-            v-html="data?.content"
+            v-html="data?.isMarkdown ? previewContent : data?.content"
         />
     </div>
 </template>
@@ -43,6 +43,8 @@ import moment from 'moment'
 import { useUserStore } from '@/stores/user'
 import { storeToRefs } from 'pinia'
 import Bus from '@/utils/bus'
+// @ts-ignore
+import MarkdownIt from 'markdown-it'
 
 const data = ref<Article>()
 
@@ -65,6 +67,12 @@ const avatar = computed(() => {
 
 const authorName = computed(() => {
     return data.value?.author?.username || '匿名猫猫'
+})
+
+const markdown = new MarkdownIt()
+
+const previewContent = computed(() => {
+    return markdown.render(data.value?.content)
 })
 
 articleId.value = route.params.id
