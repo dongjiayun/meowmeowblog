@@ -66,3 +66,39 @@ export const articleModel:ApiModel = {
         return deleteHttp(`/article/${articleId}`)
     }
 }
+
+export const ArticleModel:ApiModel = {
+    list(data) {
+        return post('/article/get', data)
+    },
+    get(articleId) {
+        return get(`/article/${articleId}`)
+    },
+    like(articleId) {
+        return post(`/article/like/${articleId}`)
+    },
+    collect(articleId) {
+        return post(`/article/collect/${articleId}`)
+    },
+    unLike(articleId) {
+        return deleteHttp(`/article/like/${articleId}`)
+    },
+    unCollect(articleId) {
+        return deleteHttp(`/article/collect/${articleId}`)
+    },
+    checkLikeAndCollect(articleId) {
+        return get(`/article/checkLikeAndCollect/${articleId}`)
+    },
+    create(data) {
+        return post('/article', data)
+    },
+    edit(data) {
+        return put('/article', data)
+    },
+    setPrivate(data) {
+        return post(`/article/private/${data.articleId}`, data)
+    },
+    deleteArticle(articleId) {
+        return deleteHttp(`/article/${articleId}`)
+    }
+}

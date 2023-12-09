@@ -64,5 +64,6 @@ declare interface Article extends Model{
     colllectCount:number
     commentIds : Ids
     commentCount :number
-    isPrivate :boolean
+    isPrivate :boolean,
+    isMarkdown:boolean
 }

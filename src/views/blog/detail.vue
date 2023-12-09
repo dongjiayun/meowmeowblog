@@ -1,5 +1,12 @@
 <template>
     <div class="blog-detail">
+        <div v-if="cid === data?.authorId" class="blog-detail-buttons">
+            <el-button @click="handleDelete">删除</el-button>
+            <el-button v-if="data?.isPrivate" @click="handleSetPrivate">解除私密</el-button>
+            <el-button v-else @click="handleSetPrivate">设为私密</el-button>
+            <el-button type="primary" @click="handleEdit">编辑</el-button>
+            <el-tag v-if="data?.isPrivate" style="margin-left: 10px">私密</el-tag>
+        </div>
         <div v-if="covers && covers.length > 0" class="blog-detail-covers">
             <el-carousel height="600px">
                 <el-carousel-item v-for="item in covers" :key="item" class="blog-detail-covers-item">
@@ -18,17 +25,24 @@
             <div class="blog-detail-header-name">{{ authorName }}</div>
             <div class="blog-detail-header-date">发表于 {{ moment(data?.createAt).format('YYYY-MM-DD HH:mm:ss') }}</div>
         </div>
-        <div class="blog-detail-body" v-html="data?.content" />
+        <div
+            class="blog-detail-body"
+            :class="{ 'markdown-body': data?.isMarkdown }"
+            v-html="data?.content"
+        />
     </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
-import { articleModel } from '@/api'
+import { ArticleModel, articleModel } from '@/api'
 import { useRouter, useRoute } from 'vue-router'
-import { ElLoading, ElMessage } from 'element-plus'
+import { ElLoading, ElMessage, ElMessageBox } from 'element-plus'
 import { getRandomCover } from '@/utils'
 import moment from 'moment'
+import { useUserStore } from '@/stores/user'
+import { storeToRefs } from 'pinia'
+import Bus from '@/utils/bus'
 
 const data = ref<Article>()
 
@@ -37,6 +51,9 @@ const router = useRouter()
 const route = useRoute()
 
 const articleId = ref()
+
+const userStore = useUserStore()
+const { cid } = storeToRefs(userStore)
 
 const covers = computed(() => {
     return data.value?.covers || []
@@ -74,10 +91,77 @@ const getData = () => {
         loading.close()
     })
 }
+
+const handleEdit = () => {
+    if (!data.value?.isMarkdown) {
+        return ElMessage.warning('文章为不 Markdown 格式,请去移动端编辑')
+    }
+    router.push({
+        name: 'updateBlog',
+        params: {
+            id: articleId.value
+        }
+    })
+}
+
+const handleSetPrivate = () => {
+    const params = {
+        isPrivate: !data.value?.isPrivate,
+        articleId: articleId.value
+    }
+    const loading = ElLoading.service({
+        lock: true,
+        text: '加载中~'
+    })
+    ArticleModel.setPrivate(params).then(res => {
+        if (res.status === 0) {
+            getData()
+        } else {
+            ElMessage({
+                type: 'error',
+                message: res.message
+            })
+        }
+    }).finally(() => {
+        loading.close()
+    })
+}
+
+const handleDelete = () => {
+    ElMessageBox.confirm('是否删除该文章?', '删除').then(() => {
+        const loading = ElLoading.service({
+            lock: true,
+            text: '加载中~'
+        })
+        ArticleModel.deleteArticle(articleId.value).then(res => {
+            if (res.status === 0) {
+                ElMessage.success('删除成功')
+                router.replace({
+                    name: 'blog'
+                })
+                Bus.emit('refresh')
+            } else {
+                ElMessage({
+                    type: 'error',
+                    message: res.message
+                })
+            }
+        }).finally(() => {
+            loading.close()
+        })
+    })
+}
+
 </script>
 
 <style scoped lang="scss">
 .blog-detail{
+    &-buttons{
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 20px;
+        align-items: center;
+    }
     &-covers{
         background:url("@/assets/base/textLogo.png") repeat;
         margin-bottom: 20px;

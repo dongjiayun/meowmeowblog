@@ -29,15 +29,18 @@ export default {
 </script>
 <script setup lang="ts">
 import { articleModel } from '@/api'
-import { onMounted, ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { pagination } from '@/mixins/pagination'
 import { ElLoading, ElMessage } from 'element-plus'
 import articleItem from '@/components/blog/articleItem.vue'
 import { checkLogin } from '@/utils/auth'
+import { useRouter } from 'vue-router'
+import Bus from '@/utils/bus'
 
 const {
     pageNo,
     pageSize,
+    initPagination
 } = pagination()
 
 const noMore = ref(false)
@@ -45,8 +48,20 @@ const noMore = ref(false)
 const list = ref<Array<Article>>([])
 
 onMounted(() => {
-    getData()
+    init()
+    Bus.on('refresh', init)
 })
+
+onBeforeUnmount(() => {
+    Bus.off('refresh')
+})
+
+const init = () => {
+    initPagination()
+    list.value = []
+    noMore.value = false
+    getData()
+}
 
 const getData = () => {
     const params = {
@@ -82,8 +97,13 @@ const handleLoadmore = () => {
     getData()
 }
 
+const router = useRouter()
+
 const handleAdd = async() => {
     await checkLogin()
+    router.push({
+        name: 'createBlog'
+    })
 }
 
 </script>

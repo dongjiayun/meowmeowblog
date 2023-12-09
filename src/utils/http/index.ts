@@ -2,7 +2,8 @@ import { objectTreeShake } from '@/utils'
 import { ElMessage } from 'element-plus'
 import axios from 'axios'
 import type { ResponseData, ResponseType } from '@/types/base'
-import {useUserStore} from '@/stores/user'
+import { useUserStore } from '@/stores/user'
+import Bus from '@/utils/bus'
 
 // @ts-ignore
 const env = import.meta.env
@@ -22,8 +23,7 @@ const errMsg = (message:string) => {
 }
 
 const refreshToken = () => {
-    const store = useUserStore()
-    store.refresh()
+    Bus.emit('login')
 }
 
 instance.interceptors.request.use(
@@ -36,7 +36,7 @@ instance.interceptors.request.use(
             config.data = query
         }
         config.headers['refresh-token'] = store.refreshToken
-        config.headers['Authorization'] = store.jwtToken
+        config.headers['Authorization'] = store.token
         return config
     },
     error => {

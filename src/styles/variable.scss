@@ -7,3 +7,18 @@
 );
 
 @use "element-plus/theme-chalk/src/index.scss" as *;
+
+.blog-button{
+    padding:10px 20px;
+    border-radius: 20px;
+    font-size: 32px;
+    background: #FFF;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    color: #FFAA2C;
+    transition: all 0.1s;
+    &:hover{
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        transform:  scale(1.1);
+    }
+}

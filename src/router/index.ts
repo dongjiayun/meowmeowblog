@@ -26,6 +26,16 @@ const blog = [
         path: '/blog/detail/:id',
         name: 'blog-detail',
         component: () => import('@/views/blog/detail.vue')
+    },
+    {
+        path: '/blog/create',
+        name: 'createBlog',
+        component: () => import('@/views/blog/createAndEdit.vue')
+    },
+    {
+        path: '/blog/update/:id',
+        name: 'updateBlog',
+        component: () => import('@/views/blog/createAndEdit.vue')
     }
 ]
 
