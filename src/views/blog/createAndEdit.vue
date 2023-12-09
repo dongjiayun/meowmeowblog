@@ -96,6 +96,9 @@ const handleSubmit = async() => {
         content: content.value,
         isMarkdown: true
     }
+    if (isEdit) {
+        params.articleId = route.params.id
+    }
     const loading = ElLoading.service({
         lock: true,
         text: '请稍后...',
@@ -103,10 +106,12 @@ const handleSubmit = async() => {
     ArticleModel[isEdit ? 'edit' : 'create'](params).then(res => {
         if (res.status === 0) {
             ElMessage.success('发表成功')
-            router.replace({
-                name: 'blog',
+            router.push({
+                name: 'blog-detail',
+                params: {
+                    id: isEdit ? route.params.id : res.data
+                }
             })
-            Bus.emit('refresh')
         } else {
             ElMessage.error(res.message)
         }
