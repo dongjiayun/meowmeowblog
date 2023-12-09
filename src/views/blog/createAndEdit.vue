@@ -11,7 +11,7 @@
             </el-form>
         </div>
         <div class="editor-content">
-            <div class="editor-input">
+            <div ref="inputRef" class="editor-input">
                 <el-input
                     v-model="content"
                     type="textarea"
@@ -22,7 +22,7 @@
                 />
             </div>
             <div class="editor-divider" />
-            <div class="editor-preview markdown-body">
+            <div ref="previewRef" class="editor-preview markdown-body">
                 <div v-html="previewContent" />
             </div>
         </div>
@@ -33,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, nextTick, onMounted, ref } from 'vue'
 // @ts-ignore
 import MarkdownIt from 'markdown-it'
 import { articleModel, ArticleModel } from '@/api'
@@ -68,6 +68,23 @@ const isEdit = route.name === 'updateBlog'
 const router = useRouter()
 
 const articleId = route.params.id
+
+const inputRef = ref()
+
+const previewRef = ref()
+
+nextTick(() => {
+    inputRef.value.addEventListener('scroll', e => {
+        const { offsetHeight, scrollTop } = inputRef.value
+        const _srcollTop = previewRef.value.offsetHeight / (offsetHeight / scrollTop)
+        previewRef.value.scrollTo({ top: _srcollTop })
+    })
+    previewRef.value.addEventListener('scroll', e => {
+        const { offsetHeight, scrollTop } = previewRef.value
+        const _srcollTop = inputRef.value.offsetHeight / (offsetHeight / scrollTop)
+        inputRef.value.scrollTo({ top: _srcollTop })
+    })
+})
 
 const getData = () => {
     const loading = ElLoading.service({
