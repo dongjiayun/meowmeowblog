@@ -1,7 +1,7 @@
 <template>
     <div class="comment-card">
         <div class="comment-card-header">
-            <el-avatar :src="avatar" />
+            <el-avatar :src="avatar || getRandomCover()" />
             <div class="comment-card-header-name">{{ data.author.username }}</div>
             <div class="comment-card-header-date">{{ moment(data.createdAt).format('YYYY-MM-DD HH:mm:ss') }}</div>
         </div>
@@ -42,7 +42,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import moment from 'moment'
-import { toThousandsNum } from '@/utils'
+import { getRandomCover, toThousandsNum } from '@/utils'
 import { useUserStore } from '@/stores/user'
 import { commentModel } from '@/api'
 import { ElLoading, ElMessage, ElMessageBox } from 'element-plus'

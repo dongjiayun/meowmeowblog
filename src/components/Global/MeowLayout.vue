@@ -14,6 +14,15 @@
                     @click="$router.push({ name: item.route })"
                 >{{ item.name }}</div>
             </div>
+            <div class="meow-layout-header-notice" @click="handleNotice">
+                <el-badge
+                    :value="noticeNum"
+                    :max="99"
+                    class="item"
+                >
+                    <el-icon color="#FFAA2C" :size="30"><Bell /></el-icon>
+                </el-badge>
+            </div>
             <div class="meow-layout-header-profile">
                 <div v-if="token" class="meow-layout-header-profile-inner" @click="handleLogout">
                     <el-avatar v-if="avatar" style="margin-right: 8px" :src="avatar" />{{ username }}
@@ -39,13 +48,16 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
-import { getSrc } from '@/utils'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { getSrc, toThousandsNum } from '@/utils'
 import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import { storeToRefs } from 'pinia'
 import { ElMessageBox } from 'element-plus'
 import { checkLogin } from '@/utils/auth'
+import { noticeModel } from '@/api'
+import { Local } from '@/utils/storage'
+import { ElNotification } from 'element-plus'
 
 const userStore = useUserStore()
 const token = storeToRefs(userStore).token
@@ -91,6 +103,51 @@ const handleLogout = () => {
         userStore.logout()
     })
 }
+
+const noticeNum = ref(0)
+
+const getNoticeNum = () => {
+    noticeModel.amount().then(res => {
+        noticeNum.value = res.data
+    })
+    noticeModel.list().then(res => {
+        const first = res.data?.list?.[0]
+        const readNoticeCache = Local.get('meow-notice') || []
+        if (readNoticeCache && !readNoticeCache.includes(first?.noticeId)) {
+            ElNotification({
+                title: first.title,
+                message: first.content
+            })
+        }
+        if (!readNoticeCache.includes(first?.noticeId)) {
+            Local.set('meow-notice', [...readNoticeCache, first?.noticeId])
+        }
+    })
+}
+
+const noticeInterval = ref()
+
+const initNoticeInterval = () => {
+    noticeInterval.value = setInterval(() => {
+        getNoticeNum()
+    }, 10000)
+}
+
+const handleNotice = () => {
+    router.push({
+        name: 'notice'
+    })
+}
+
+onMounted(() => {
+    getNoticeNum()
+    initNoticeInterval()
+})
+
+onBeforeUnmount(() => {
+    clearInterval(noticeInterval.value)
+})
+
 </script>
 
 <style scoped lang="scss">
@@ -143,10 +200,17 @@ const handleLogout = () => {
             margin-left: 8px;
             color: #FFAA2C;
             cursor: pointer;
+            margin-left: 20px;
             &-inner{
                 display: flex;
                 align-items: center;
             }
+        }
+        &-notice{
+            color: #FFAA2C;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
         }
     }
     &-main{

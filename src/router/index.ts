@@ -47,10 +47,19 @@ const resume = [
     }
 ]
 
+const notice = [
+    {
+        path: '/notice',
+        name: 'notice',
+        component: () => import('@/views/notice/index.vue')
+    }
+]
+
 const routes: Array<any> = [
     ...base,
     ...blog,
     ...resume,
+    ...notice,
 ]
 
 const router = createRouter({

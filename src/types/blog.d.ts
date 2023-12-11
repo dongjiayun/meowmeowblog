@@ -81,3 +81,14 @@ declare interface Comment extends Model {
     rootCommentId : string
     childrenCommentIds :Ids
 }
+
+declare interface Notice extends Model {
+    noticeId : string
+    avatar : File
+    title : string
+    content : string
+    noticeType: string
+    noticeCode :string
+    targetCid : string
+    isReaded : bool
+}

@@ -129,3 +129,18 @@ export const commentModel:ApiModel = {
         return post('/comment/get/like', data)
     }
 }
+
+export const noticeModel:ApiModel = {
+    list(data) {
+        return post('/notice/get', data)
+    },
+    amount() {
+        return get(`/notice/amount`)
+    },
+    read(noticeId) {
+        return put(`/notice/${noticeId}`)
+    },
+    readAll() {
+        return put(`/notice/readAll`)
+    }
+}
