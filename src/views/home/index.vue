@@ -27,16 +27,16 @@ import moment from 'moment'
 import { getSrc } from '@/utils'
 
 const list = ref([
-    getSrc('gifs/1.gif'),
-    getSrc('gifs/2.gif'),
-    getSrc('gifs/3.gif'),
-    getSrc('gifs/4.gif'),
-    getSrc('gifs/5.gif'),
-    getSrc('gifs/6.gif'),
-    getSrc('gifs/7.gif'),
-    getSrc('gifs/8.gif'),
-    getSrc('gifs/9.gif'),
-    getSrc('gifs/10.gif'),
+    'https://qa-res.ipetapi.com/meowmeowmeow/1.gif',
+    'https://qa-res.ipetapi.com/meowmeowmeow/2.gif',
+    'https://qa-res.ipetapi.com/meowmeowmeow/3.gif',
+    'https://qa-res.ipetapi.com/meowmeowmeow/4.gif',
+    'https://qa-res.ipetapi.com/meowmeowmeow/5.gif',
+    'https://qa-res.ipetapi.com/meowmeowmeow/6.gif',
+    'https://qa-res.ipetapi.com/meowmeowmeow/7.gif',
+    'https://qa-res.ipetapi.com/meowmeowmeow/8.gif',
+    'https://qa-res.ipetapi.com/meowmeowmeow/9.gif',
+    'https://qa-res.ipetapi.com/meowmeowmeow/10.gif',
 ])
 
 const router = useRouter()

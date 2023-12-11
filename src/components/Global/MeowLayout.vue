@@ -106,7 +106,16 @@ const handleLogout = () => {
 
 const noticeNum = ref(0)
 
+watch(() => userStore.token, () => {
+    if (!userStore.token) {
+        noticeNum.value = 0
+    }
+})
+
 const getNoticeNum = () => {
+    if (!userStore.token) {
+        return
+    }
     noticeModel.amount().then(res => {
         noticeNum.value = res.data
     })
