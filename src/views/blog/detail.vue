@@ -25,11 +25,53 @@
             <div class="blog-detail-header-name">{{ authorName }}</div>
             <div class="blog-detail-header-date">发表于 {{ moment(data?.createAt).format('YYYY-MM-DD HH:mm:ss') }}</div>
         </div>
+        <div class="blog-detail-info">
+            <div v-if="liked" class="blog-detail-info-item">
+                <div>{{ toThousandsNum(likeCount,0) }}</div>
+                <el-icon :size="26" color="#FFAA2C"><StarFilled /></el-icon>
+            </div>
+            <div v-else class="blog-detail-info-item">
+                <div>{{ toThousandsNum(likeCount,0) }}</div>
+                <el-icon :size="26" color="#FFAA2C"><Star /></el-icon>
+            </div>
+            <div class="blog-detail-info-item">
+                <div>{{ toThousandsNum(collectCount || 0,0) }}</div>
+                <el-icon :size="26" color="#FFAA2C"><Share /></el-icon>
+            </div>
+            <div class="blog-detail-info-item">
+                <div>{{ toThousandsNum(commentCount || 0,0) }}</div>
+                <el-icon :size="26" color="#FFAA2C"><Comment /></el-icon>
+            </div>
+        </div>
         <div
             class="blog-detail-body"
             :class="{ 'markdown-body': data?.isMarkdown }"
             v-html="data?.isMarkdown ? previewContent : data?.content"
         />
+        <comment
+            :article-id="articleId"
+            :target-id="articleId"
+            style="margin-top: 40px"
+        />
+        <Teleport to="#layout">
+            <div
+                class="blog-detail-fixed-button"
+                :class="{ active: liked }"
+                style="bottom: 180px"
+                @click="handleLike"
+            >
+                <el-icon><Star /></el-icon>
+            </div>
+        </Teleport>
+        <Teleport to="#layout">
+            <div
+                class="blog-detail-fixed-button"
+                :class="{ active: collected }"
+                @click="handleCollect"
+            >
+                <el-icon><Share /></el-icon>
+            </div>
+        </Teleport>
     </div>
 </template>
 
@@ -38,11 +80,13 @@ import { ref, onMounted, computed } from 'vue'
 import { ArticleModel, articleModel } from '@/api'
 import { useRouter, useRoute } from 'vue-router'
 import { ElLoading, ElMessage, ElMessageBox } from 'element-plus'
-import { getRandomCover } from '@/utils'
+import { getRandomCover, toThousandsNum } from '@/utils'
 import moment from 'moment'
 import { useUserStore } from '@/stores/user'
 import { storeToRefs } from 'pinia'
 import Bus from '@/utils/bus'
+import comment from './components/comment.vue'
+
 // @ts-ignore
 import MarkdownIt from 'markdown-it'
 
@@ -77,6 +121,22 @@ const previewContent = computed(() => {
 
 articleId.value = route.params.id
 
+const liked = ref(false)
+
+const collected = ref(false)
+
+const likeCount = computed(() => {
+    return data.value?.likeCids?.length || 0
+})
+
+const collectCount = computed(() => {
+    return data.value?.collectCids?.length || 0
+})
+
+const commentCount = computed(() => {
+    return data.value?.commentIds?.length || 0
+})
+
 onMounted(() => {
     getData()
 })
@@ -89,6 +149,8 @@ const getData = () => {
     articleModel.get(articleId.value).then(res => {
         if (res.status === 0) {
             data.value = res.data
+            liked.value = res.data.likeCids.includes(cid.value)
+            collected.value = res.data.collectCids.includes(cid.value)
         } else {
             ElMessage({
                 type: 'error',
@@ -160,6 +222,78 @@ const handleDelete = () => {
     })
 }
 
+const handleLike = () => {
+    const loading = ElLoading.service({
+        lock: true,
+        text: '加载中~'
+    })
+    if (liked.value) {
+        ArticleModel.unLike(articleId.value).then(res => {
+            if (res.status === 0) {
+                getData()
+                ElMessage.success('已取消点赞')
+            } else {
+                ElMessage({
+                    type: 'error',
+                    message: res.message
+                })
+            }
+        }).finally(() => {
+            loading.close()
+        })
+    } else {
+        ArticleModel.like(articleId.value).then(res => {
+            if (res.status === 0) {
+                getData()
+                ElMessage.success('点赞成功')
+            } else {
+                ElMessage({
+                    type: 'error',
+                    message: res.message
+                })
+            }
+        }).finally(() => {
+            loading.close()
+        })
+    }
+}
+
+const handleCollect = () => {
+    const loading = ElLoading.service({
+        lock: true,
+        text: '加载中~'
+    })
+    if (collected.value) {
+        ArticleModel.unCollect(articleId.value).then(res => {
+            if (res.status === 0) {
+                getData()
+                ElMessage.success('已取消收藏')
+            } else {
+                ElMessage({
+                    type: 'error',
+                    message: res.message
+                })
+            }
+        }).finally(() => {
+            loading.close()
+        })
+    } else {
+        ArticleModel.collect(articleId.value).then(res => {
+            if (res.status === 0) {
+                getData()
+                ElMessage.success('收藏成功')
+            } else {
+                ElMessage({
+                    type: 'error',
+                    message: res.message
+                })
+            }
+        }).finally(() => {
+            loading.close()
+        })
+    }
+}
+
 </script>
 
 <style scoped lang="scss">
@@ -202,6 +336,35 @@ const handleDelete = () => {
      &-body{
         font-size: 24px;
         overflow: auto;
+    }
+    &-info{
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        &-item{
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+        }
+    }
+    &-fixed-button{
+        position: fixed;
+        right: 40px;
+        bottom:120px;
+        width: 40px;
+        height: 40px;
+        border-radius: 60px;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #FFAA2C;
+        box-shadow:  var(--el-box-shadow-lighter);
+        cursor: pointer;
+        &.active{
+            background: #FFAA2C;
+            color: #fff;
+        }
     }
 }
 </style>

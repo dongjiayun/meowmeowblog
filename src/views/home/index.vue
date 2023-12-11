@@ -24,18 +24,19 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import moment from 'moment'
+import { getSrc } from '@/utils'
 
 const list = ref([
-    'https://qa-res.ipetapi.com/meowmeowmeow/placeholders/0.png',
-    'https://qa-res.ipetapi.com/meowmeowmeow/placeholders/1.png',
-    'https://qa-res.ipetapi.com/meowmeowmeow/placeholders/2.png',
-    'https://qa-res.ipetapi.com/meowmeowmeow/placeholders/3.png',
-    'https://qa-res.ipetapi.com/meowmeowmeow/placeholders/4.png',
-    'https://qa-res.ipetapi.com/meowmeowmeow/placeholders/0.png',
-    'https://qa-res.ipetapi.com/meowmeowmeow/placeholders/1.png',
-    'https://qa-res.ipetapi.com/meowmeowmeow/placeholders/2.png',
-    'https://qa-res.ipetapi.com/meowmeowmeow/placeholders/3.png',
-    'https://qa-res.ipetapi.com/meowmeowmeow/placeholders/4.png',
+    getSrc('gifs/1.gif'),
+    getSrc('gifs/2.gif'),
+    getSrc('gifs/3.gif'),
+    getSrc('gifs/4.gif'),
+    getSrc('gifs/5.gif'),
+    getSrc('gifs/6.gif'),
+    getSrc('gifs/7.gif'),
+    getSrc('gifs/8.gif'),
+    getSrc('gifs/9.gif'),
+    getSrc('gifs/10.gif'),
 ])
 
 const router = useRouter()
@@ -58,9 +59,9 @@ const handleBlog = () => {
         overflow: hidden;
         &-item{
             position: relative;
-            left: -500px;
+            left: -200px;
             top:-300px;
-            width: 300px;
+            width: 500px;
             flex-shrink: 0;
             height:calc(100vh + 1000px);
             transform: rotate(15deg);
@@ -69,15 +70,15 @@ const handleBlog = () => {
             filter: blur(20px);
             &-inner{
                 position: relative;
-                height:calc(100vh + 1000px);
+                height:calc(100vh + 800px);
                 transform: rotate(-15deg) ;
-                width: 1200px;
-                left: -500px;
+                width: 1600px;
+                left: -300px;
             }
             &:hover{
-                width: 600px;
+                width: 1000px;
                 filter: blur(0px);
-                left: -450px;
+                left: -250px;
             }
         }
     }

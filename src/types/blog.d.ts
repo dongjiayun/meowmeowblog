@@ -67,3 +67,17 @@ declare interface Article extends Model{
     isPrivate :boolean,
     isMarkdown:boolean
 }
+
+declare interface Comment extends Model {
+    commentId: string
+    content : string
+    author : SafeUser
+    authorId : string
+    location: Location
+    likeIds : Ids
+    targetId : string
+    attachments : File[]
+    articleId : string
+    rootCommentId : string
+    childrenCommentIds :Ids
+}

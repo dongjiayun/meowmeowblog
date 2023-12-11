@@ -102,3 +102,30 @@ export const ArticleModel:ApiModel = {
         return deleteHttp(`/article/${articleId}`)
     }
 }
+
+export const commentModel:ApiModel = {
+    list(data) {
+        return post('/comment/get', data)
+    },
+    detail(commentId) {
+        return get(`/comment/${commentId}`)
+    },
+    create(data) {
+        return post('/comment', data)
+    },
+    edit(data) {
+        return put('/comment', data)
+    },
+    delete(commentId) {
+        return deleteHttp(`/comment/${commentId}`)
+    },
+    like(commentId) {
+        return post(`/comment/like/${commentId}`)
+    },
+    unLike(commentId) {
+        return deleteHttp(`/comment/like/${commentId}`)
+    },
+    getLikeComments(data) {
+        return post('/comment/get/like', data)
+    }
+}
