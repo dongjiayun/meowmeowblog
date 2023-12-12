@@ -30,6 +30,15 @@ declare interface SafeUser {
     role :string
 }
 
+declare interface SafeUserDetail extends SafeUser{
+    commentIds : Ids
+    likeArticleIds : Ids
+    likeCommentIds : Ids
+    collectIds : Ids
+    followIds : Ids
+    followerIds : Ids
+}
+
 declare interface Tag extends Model{
     tagId :string
     label :string
@@ -92,3 +101,4 @@ declare interface Notice extends Model {
     targetCid : string
     isReaded : bool
 }
+

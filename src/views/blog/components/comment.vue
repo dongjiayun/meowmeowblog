@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 import { commentModel } from '@/api'
 import { ElLoading, ElMessage } from 'element-plus'
 import { pagination } from '@/mixins/pagination'
@@ -69,6 +69,9 @@ const init = () => {
     commentForm.value.content = ''
     initPagination()
     getComments()
+    nextTick(() => {
+        formRef.value.resetFields()
+    })
 }
 
 onMounted(() => {

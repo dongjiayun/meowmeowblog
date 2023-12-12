@@ -39,7 +39,6 @@ import MarkdownIt from 'markdown-it'
 import { articleModel, ArticleModel } from '@/api'
 import { useRoute, useRouter } from 'vue-router'
 import { ElLoading, ElMessage } from 'element-plus'
-import Bus from '@/utils/bus'
 
 const content = ref('')
 

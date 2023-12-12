@@ -55,11 +55,34 @@ const notice = [
     }
 ]
 
+const user = [
+    {
+        path: '/user/:id',
+        name: 'user',
+        component: () => import('@/views/user/index.vue')
+    },
+    {
+        path: '/mine',
+        name: 'mine',
+        component: () => import('@/views/user/index.vue')
+    }
+]
+
+const about = [
+    {
+        path: '/about',
+        name: 'about',
+        component: () => import('@/views/about/index.vue')
+    }
+]
+
 const routes: Array<any> = [
     ...base,
     ...blog,
     ...resume,
     ...notice,
+    ...user,
+    ...about
 ]
 
 const router = createRouter({

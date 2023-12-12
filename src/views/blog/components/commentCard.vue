@@ -1,6 +1,6 @@
 <template>
     <div class="comment-card">
-        <div class="comment-card-header">
+        <div class="comment-card-header" @click="handleUser">
             <el-avatar :src="avatar || getRandomCover()" />
             <div class="comment-card-header-name">{{ data.author.username }}</div>
             <div class="comment-card-header-date">{{ moment(data.createdAt).format('YYYY-MM-DD HH:mm:ss') }}</div>
@@ -9,6 +9,14 @@
             {{ data.content }}
         </div>
         <div class="comment-card-footer">
+            <div
+                v-if="toArticle"
+                class="comment-card-footer-item"
+                style="color:#FFAA2C;cursor:pointer;"
+                @click="handleToArticle"
+            >
+                跳转到小作文
+            </div>
             <div
                 v-if="cid === data.authorId"
                 class="comment-card-footer-item"
@@ -47,10 +55,12 @@ import { useUserStore } from '@/stores/user'
 import { commentModel } from '@/api'
 import { ElLoading, ElMessage, ElMessageBox } from 'element-plus'
 import comment from './comment.vue'
+import { useRouter } from 'vue-router'
 
 const props = defineProps<{
     data: Comment,
-    articleId: string
+    articleId: string,
+    toArticle?: boolean
 }>()
 
 const liked = ref(false)
@@ -132,6 +142,26 @@ const handleDelete = () => {
         })
     })
 }
+
+const router = useRouter()
+
+const handleUser = () => {
+    router.push({
+        name: 'user',
+        params: {
+            id: props.data.authorId
+        }
+    })
+}
+
+const handleToArticle = () => {
+    router.push({
+        name: 'blog-detail',
+        params: {
+            id: props.data.articleId
+        }
+    })
+}
 </script>
 
 <style scoped lang="scss">
@@ -141,6 +171,7 @@ const handleDelete = () => {
     border-radius: 12px;
     box-shadow:  0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
     &-header{
+        cursor: pointer;
         display: flex;
         align-items: center;
         &-name{
@@ -169,5 +200,8 @@ const handleDelete = () => {
     &-comments{
         margin-top: 20px;
     }
+}
+.comment-card+.comment-card{
+    margin-top: 20px;
 }
 </style>

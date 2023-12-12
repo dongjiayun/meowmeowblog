@@ -49,7 +49,7 @@
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { getSrc, toThousandsNum } from '@/utils'
+import { getSrc, noticeJump } from '@/utils'
 import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import { storeToRefs } from 'pinia'
@@ -79,7 +79,9 @@ watch(route, () => {
 const menus = ref([
     { name: '博客', route: 'blog' },
     { name: '博客mobile', route: 'blog-h5' },
-    { name: '简历', route: 'resume' }
+    { name: '我的', route: 'mine' },
+    { name: '关于', route: 'about' },
+    { name: '简历', route: 'resume' },
 ])
 
 const handleHome = () => {
@@ -125,7 +127,10 @@ const getNoticeNum = () => {
         if (readNoticeCache && !readNoticeCache.includes(first?.noticeId)) {
             ElNotification({
                 title: first.title,
-                message: first.content
+                message: first.content,
+                onClick: () => {
+                    noticeJump(first)
+                }
             })
         }
         if (!readNoticeCache.includes(first?.noticeId)) {

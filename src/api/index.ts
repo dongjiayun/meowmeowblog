@@ -144,3 +144,33 @@ export const noticeModel:ApiModel = {
         return put(`/notice/readAll`)
     }
 }
+
+export const userModel:ApiModel = {
+    info(cid) {
+        return get(`/user/${cid}`)
+    },
+    update(data) {
+        return put('/user', data)
+    },
+    myLikeArticles(data) {
+        return post('/user/myLikeArticles', data)
+    },
+    myCollectArticles(data) {
+        return post('/user/myCollectArticles', data)
+    },
+    checkFollow(data) {
+        return post('/user/checkFollow', data)
+    },
+    follow(cid) {
+        return post(`/user/follow/${cid}`)
+    },
+    unFollow(cid) {
+        return deleteHttp(`/user/follow/${cid}`)
+    },
+    getFollows(data) {
+        return post('/user/getFollows', data)
+    },
+    getFollowers(data) {
+        return post('/user/getFollowers', data)
+    }
+}

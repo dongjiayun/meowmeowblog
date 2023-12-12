@@ -7,6 +7,7 @@ import { useAppStore } from '@/stores/app'
 import { CommonModel } from '@/api'
 import moment from 'moment'
 import { ElMessage } from 'element-plus'
+import { useRouter } from 'vue-router'
 
 interface dictProp {
     value:string,
@@ -313,5 +314,51 @@ export const copy = (content:string, message = '复制成功', alert = true) => 
             message,
             type: 'success'
         })
+    }
+}
+
+export const noticeJump = (data:Notice) => {
+    const router = useRouter()
+    switch (data.noticeType) {
+        case 'collectArticle':
+        case 'likeArticle':
+            router.push({
+                name: 'blog-detail',
+                params: {
+                    id: data.noticeCode
+                }
+            })
+            break
+        case 'follow':
+            router.push({
+                name: 'user',
+                query: {
+                    cid: data.noticeCode
+                }
+            })
+            break
+        case 'article':
+            router.push({
+                name: 'blog-detail',
+                params: {
+                    id: data.noticeCode
+                }
+            })
+            break
+        case 'comment':
+            router.push({
+                name: 'blog-detail',
+                params: {
+                    id: data.noticeCode.split('|')?.[1],
+                }
+            })
+            break
+        case 'likeComment':
+            router.push({
+                name: 'blog-detail',
+                params: {
+                    articleId: data.noticeCode.split('|')?.[1],
+                }
+            })
     }
 }

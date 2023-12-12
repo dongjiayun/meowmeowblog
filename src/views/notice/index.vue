@@ -23,7 +23,7 @@ import { onMounted, ref } from 'vue'
 import { pagination } from '@/mixins/pagination'
 import { noticeModel } from '@/api'
 import { ElLoading, ElMessage } from 'element-plus'
-import { getRandomCover } from '@/utils'
+import { getRandomCover, noticeJump } from '@/utils'
 import moment from 'moment'
 import { useRouter } from 'vue-router'
 import { Local } from '@/utils/storage'
@@ -96,50 +96,6 @@ const handleRead = notice => {
 }
 
 const router = useRouter()
-const noticeJump = data => {
-    switch (data.noticeType) {
-        case 'collectArticle':
-        case 'likeArticle':
-            router.push({
-                name: 'blog-detail',
-                params: {
-                    id: data.noticeCode
-                }
-            })
-            break
-        case 'follow':
-            router.push({
-                name: 'user',
-                query: {
-                    cid: data.noticeCode
-                }
-            })
-            break
-        case 'article':
-            router.push({
-                name: 'blog-detail',
-                params: {
-                    id: data.noticeCode
-                }
-            })
-            break
-        case 'comment':
-            router.push({
-                name: 'blog-detail',
-                params: {
-                    id: data.noticeCode.split('|')?.[1],
-                }
-            })
-            break
-        case 'likeComment':
-            router.push({
-                name: 'blog-detail',
-                params: {
-                    articleId: data.noticeCode.split('|')?.[1],
-                }
-            })
-    }
-}
 
 </script>
 

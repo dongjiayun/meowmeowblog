@@ -20,7 +20,7 @@
                 </el-carousel-item>
             </el-carousel>
         </div>
-        <div class="blog-detail-header">
+        <div class="blog-detail-header" @click="handleUser">
             <el-image class="blog-detail-header-avatar" :src="avatar" />
             <div class="blog-detail-header-name">{{ authorName }}</div>
             <div class="blog-detail-header-date">发表于 {{ moment(data?.createAt).format('YYYY-MM-DD HH:mm:ss') }}</div>
@@ -79,7 +79,7 @@
 import { ref, onMounted, computed } from 'vue'
 import { ArticleModel, articleModel } from '@/api'
 import { useRouter, useRoute } from 'vue-router'
-import { ElLoading, ElMessage, ElMessageBox } from 'element-plus'
+import { ElLoading, ElMessage, ElMessageBox, ElNotification } from 'element-plus'
 import { getRandomCover, toThousandsNum } from '@/utils'
 import moment from 'moment'
 import { useUserStore } from '@/stores/user'
@@ -148,6 +148,10 @@ const getData = () => {
     })
     articleModel.get(articleId.value).then(res => {
         if (res.status === 0) {
+            if (!res.data) {
+                ElMessage.error('文章不存在,或文章处于私密状态')
+                return router.back()
+            }
             data.value = res.data
             liked.value = res.data.likeCids.includes(cid.value)
             collected.value = res.data.collectCids.includes(cid.value)
@@ -164,7 +168,7 @@ const getData = () => {
 
 const handleEdit = () => {
     if (!data.value?.isMarkdown) {
-        return ElMessage.warning('文章为不 Markdown 格式,请去移动端编辑')
+        return ElMessage.warning('文章不为 Markdown 格式,请移步至移动端编辑')
     }
     router.push({
         name: 'updateBlog',
@@ -294,6 +298,15 @@ const handleCollect = () => {
     }
 }
 
+const handleUser = () => {
+    router.push({
+        name: 'user',
+        params: {
+            id: data.value?.author?.cid
+        }
+    })
+}
+
 </script>
 
 <style scoped lang="scss">
@@ -317,6 +330,7 @@ const handleCollect = () => {
         display: flex;
         align-items: center;
         margin-bottom: 20px;
+        cursor: pointer;
         &-avatar{
             width: 60px;
             height: 60px;
