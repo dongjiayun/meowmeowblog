@@ -175,7 +175,8 @@ onBeforeUnmount(() => {
         position: sticky;
         top:0;
         z-index: 100;
-        background: #FFFFFF;
+        backdrop-filter: blur(20px);
+        background: rgba(255, 255, 255, 0.5);
         &-logo{
             display: flex;
             align-items: center;
