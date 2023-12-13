@@ -76,13 +76,22 @@ const about = [
     }
 ]
 
+const message = [
+    {
+        path: '/message',
+        name: 'message',
+        component: () => import('@/views/message/index.vue')
+    }
+]
+
 const routes: Array<any> = [
     ...base,
     ...blog,
     ...resume,
     ...notice,
     ...user,
-    ...about
+    ...about,
+    ...message
 ]
 
 const router = createRouter({

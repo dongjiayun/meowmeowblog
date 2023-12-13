@@ -79,6 +79,7 @@ watch(route, () => {
 const menus = ref([
     { name: '博客', route: 'blog' },
     { name: '博客mobile', route: 'blog-h5' },
+    { name: '留言板', route: 'message' },
     { name: '我的', route: 'mine' },
     { name: '关于', route: 'about' },
     { name: '简历', route: 'resume' },

@@ -74,7 +74,8 @@ declare interface Article extends Model{
     commentIds : Ids
     commentCount :number
     isPrivate :boolean,
-    isMarkdown:boolean
+    isMarkdown:boolean,
+    readCount :number
 }
 
 declare interface Comment extends Model {
@@ -102,3 +103,10 @@ declare interface Notice extends Model {
     isReaded : bool
 }
 
+declare interface Message extends Model {
+    content : string
+    messageId: string
+    authorId : string
+    author : SafeUser
+    likeIds : Ids
+}

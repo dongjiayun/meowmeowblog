@@ -20,6 +20,9 @@
                 </el-carousel-item>
             </el-carousel>
         </div>
+        <div class="blog-detail-title">
+            {{ data?.title }}
+        </div>
         <div class="blog-detail-header" @click="handleUser">
             <el-image class="blog-detail-header-avatar" :src="avatar" />
             <div class="blog-detail-header-name">{{ authorName }}</div>
@@ -28,19 +31,24 @@
         <div class="blog-detail-info">
             <div v-if="liked" class="blog-detail-info-item">
                 <div>{{ toThousandsNum(likeCount,0) }}</div>
-                <el-icon :size="26" color="#FFAA2C"><StarFilled /></el-icon>
+                <el-icon style="margin-left: 6px" :size="26" color="#FFAA2C"><StarFilled /></el-icon>
             </div>
             <div v-else class="blog-detail-info-item">
                 <div>{{ toThousandsNum(likeCount,0) }}</div>
-                <el-icon :size="26" color="#FFAA2C"><Star /></el-icon>
+                <el-icon style="margin-left: 6px" :size="26" color="#FFAA2C"><Star /></el-icon>
             </div>
             <div class="blog-detail-info-item">
                 <div>{{ toThousandsNum(collectCount || 0,0) }}</div>
-                <el-icon :size="26" color="#FFAA2C"><Share /></el-icon>
+                <el-icon style="margin-left: 6px" :size="26" color="#FFAA2C"><Share /></el-icon>
             </div>
             <div class="blog-detail-info-item">
                 <div>{{ toThousandsNum(commentCount || 0,0) }}</div>
-                <el-icon :size="26" color="#FFAA2C"><Comment /></el-icon>
+                <el-icon style="margin-left: 6px" :size="26" color="#FFAA2C"><Comment /></el-icon>
+            </div>
+            <div style="flex:1" />
+            <div class="blog-detail-info-item">
+                <div>{{ toThousandsNum(data?.readCount || 0,0) }}</div>
+                <el-icon style="margin-left: 6px" :size="26" color="#FFAA2C"><View /></el-icon>
             </div>
         </div>
         <div
@@ -311,6 +319,11 @@ const handleUser = () => {
 
 <style scoped lang="scss">
 .blog-detail{
+    &-title{
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
     &-buttons{
         display: flex;
         justify-content: flex-end;

@@ -174,3 +174,21 @@ export const userModel:ApiModel = {
         return post('/user/getFollowers', data)
     }
 }
+
+export const messageModel:ApiModel = {
+    list(data) {
+        return post('/message', data)
+    },
+    create(data) {
+        return post('/message/create', data)
+    },
+    delete(messageId) {
+        return deleteHttp(`/message/${messageId}`)
+    },
+    like(messageId) {
+        return post(`/message/like/${messageId}`)
+    },
+    unLike(messageId) {
+        return deleteHttp(`/message/like/${messageId}`)
+    }
+}
