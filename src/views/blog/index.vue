@@ -16,6 +16,7 @@
     </div>
     <Teleport to="#layout">
         <div
+            v-if="route.name === 'blog'"
             class="blog-fixed-button"
             @click="handleAdd"
         >
@@ -35,7 +36,7 @@ import { pagination } from '@/mixins/pagination'
 import { ElLoading, ElMessage } from 'element-plus'
 import articleItem from '@/components/blog/articleItem.vue'
 import { checkLogin } from '@/utils/auth'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import Bus from '@/utils/bus'
 import { uniqBy } from 'lodash'
 
@@ -52,6 +53,8 @@ const {
 } = pagination()
 
 const noMore = ref(false)
+
+const route = useRoute()
 
 const list = ref<Array<Article>>([])
 

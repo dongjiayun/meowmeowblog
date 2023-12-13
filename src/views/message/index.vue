@@ -79,6 +79,7 @@ const {
 const init = () => {
     initPagination()
     list.value = []
+    formRef.value.resetFields()
     getData()
 }
 
