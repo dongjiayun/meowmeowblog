@@ -7,7 +7,7 @@ import { useAppStore } from '@/stores/app'
 import { CommonModel } from '@/api'
 import moment from 'moment'
 import { ElMessage } from 'element-plus'
-import { useRouter } from 'vue-router'
+import router from '@/router'
 
 interface dictProp {
     value:string,
@@ -318,7 +318,6 @@ export const copy = (content:string, message = '复制成功', alert = true) => 
 }
 
 export const noticeJump = (data:Notice) => {
-    const router = useRouter()
     switch (data.noticeType) {
         case 'collectArticle':
         case 'likeArticle':
