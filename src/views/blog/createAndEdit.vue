@@ -22,8 +22,8 @@
                 />
             </div>
             <div class="editor-divider" />
-            <div ref="previewRef" class="editor-preview markdown-body">
-                <div v-html="previewContent" />
+            <div ref="previewRef" class="editor-preview">
+                <markdown style="min-height: 70vh" :content="content" />
             </div>
         </div>
         <div class="editor-buttons">
@@ -35,14 +35,12 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, ref } from 'vue'
 // @ts-ignore
-import MarkdownIt from 'markdown-it'
 import { articleModel, ArticleModel } from '@/api'
 import { useRoute, useRouter } from 'vue-router'
 import { ElLoading, ElMessage } from 'element-plus'
+import markdown from '@/components/blog/markdown.vue'
 
 const content = ref('')
-
-const markdown = new MarkdownIt()
 
 const form = ref({
     title: ''
@@ -56,10 +54,6 @@ const rules = ref({
 })
 
 const formRef = ref()
-
-const previewContent = computed(() => {
-    return markdown.render(content.value)
-})
 
 const route = useRoute()
 const isEdit = route.name === 'updateBlog'
@@ -113,6 +107,7 @@ const handleSubmit = async() => {
         isMarkdown: true
     }
     if (isEdit) {
+        // @ts-ignore
         params.articleId = route.params.id
     }
     const loading = ElLoading.service({
@@ -132,7 +127,7 @@ const handleSubmit = async() => {
             ElMessage.error(res.message)
         }
     }).finally(() => {
-        loading.close
+        loading.close()
     })
 }
 

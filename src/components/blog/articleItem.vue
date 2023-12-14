@@ -21,6 +21,11 @@
                     <div>{{ toThousandsNum(data.commentCount || 0,0) }}</div>
                     <el-icon :size="26" color="#FFAA2C"><Comment /></el-icon>
                 </div>
+                <div style="flex:1" />
+                <div class="article-item-info-extendinfo-item">
+                    <div>{{ toThousandsNum(data?.readCount || 0,0) }}</div>
+                    <el-icon style="margin-left: 6px" :size="26" color="#FFAA2C"><View /></el-icon>
+                </div>
             </div>
         </div>
     </div>

@@ -51,10 +51,15 @@
                 <el-icon style="margin-left: 6px" :size="26" color="#FFAA2C"><View /></el-icon>
             </div>
         </div>
+        <markdown
+            v-if="data?.isMarkdown"
+            :content="data?.content || ''"
+        />
         <div
+            v-else
             class="blog-detail-body"
             :class="{ 'markdown-body': data?.isMarkdown }"
-            v-html="data?.isMarkdown ? previewContent : data?.content"
+            v-html="data?.content"
         />
         <comment
             :article-id="articleId"
@@ -94,9 +99,7 @@ import { useUserStore } from '@/stores/user'
 import { storeToRefs } from 'pinia'
 import Bus from '@/utils/bus'
 import comment from './components/comment.vue'
-
-// @ts-ignore
-import MarkdownIt from 'markdown-it'
+import markdown from '@/components/blog/markdown.vue'
 
 const data = ref<Article>()
 
@@ -119,12 +122,6 @@ const avatar = computed(() => {
 
 const authorName = computed(() => {
     return data.value?.author?.username || '匿名猫猫'
-})
-
-const markdown = new MarkdownIt()
-
-const previewContent = computed(() => {
-    return markdown.render(data.value?.content)
 })
 
 articleId.value = route.params.id
@@ -161,8 +158,8 @@ const getData = () => {
                 return router.back()
             }
             data.value = res.data
-            liked.value = res.data.likeCids.includes(cid.value)
-            collected.value = res.data.collectCids.includes(cid.value)
+            liked.value = res.data.likeCids?.includes(cid.value)
+            collected.value = res.data.collectCids?.includes(cid.value)
         } else {
             ElMessage({
                 type: 'error',

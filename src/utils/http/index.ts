@@ -18,8 +18,7 @@ export const instance = axios.create({
 })
 
 const errMsg = (message:string) => {
-    console.log(message)
-    ElMessage(message)
+    ElMessage.error(message)
 }
 
 const refreshToken = () => {

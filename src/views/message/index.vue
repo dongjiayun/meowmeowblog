@@ -43,7 +43,7 @@
                     <el-input
                         v-model="commentForm.content"
                         type="textarea"
-                        placeholder="请输入评论"
+                        placeholder="请输入留言"
                         :autosize="{
                             minRows: 4
                         }"
@@ -59,7 +59,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { messageModel, noticeModel } from '@/api'
+import { messageModel } from '@/api'
 import { pagination } from '@/mixins/pagination'
 import { ElLoading, ElMessage } from 'element-plus'
 import { getRandomCover, toThousandsNum } from '@/utils'
@@ -182,7 +182,7 @@ const formRef = ref()
 const commentRules = ref({
     content: {
         required: true,
-        message: '请输入评论',
+        message: '请输入留言',
     }
 })
 
@@ -197,7 +197,7 @@ const handleSubmit = async() => {
     })
     messageModel.create(params).then(res => {
         if (res.status === 0) {
-            ElMessage.success('评论成功')
+            ElMessage.success('留言成功')
             init()
         } else {
             ElMessage.error(res.message)

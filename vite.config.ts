@@ -6,6 +6,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import ViteComponents from 'vite-plugin-components'
 // @ts-ignore
 import { createHtmlPlugin } from 'vite-plugin-html'
+import requireTransform from 'vite-plugin-require-transform'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -34,6 +35,9 @@ export default defineConfig({
                     title: '喵喵喵'
                 }
             }
+        }),
+        requireTransform({
+            fileRegex: /.js$|.ts$|.vue$/
         })
     ],
     resolve: {

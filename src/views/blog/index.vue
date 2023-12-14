@@ -56,7 +56,7 @@ const noMore = ref(false)
 
 const route = useRoute()
 
-const list = ref<Array<Article>>([])
+const list = ref<Article[]>([])
 
 onMounted(() => {
     init()
