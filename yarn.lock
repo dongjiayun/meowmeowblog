@@ -3199,6 +3199,11 @@ markdown-it-abbr@^2.0.0:
   resolved "https://registry.npmmirror.com/markdown-it-abbr/-/markdown-it-abbr-2.0.0.tgz#aa01d8ff23ebf672f9a7db02a974e59254ce7acb"
   integrity sha512-of7C8pXSjXjDojW4neNP+jD7inUYH/DO0Ca+K/4FUEccg0oHAEX/nfscw0jfz66PJbYWOAT9U8mjO21X5p6aAw==
 
+markdown-it-attrs@^4.1.6:
+  version "4.1.6"
+  resolved "https://registry.npmmirror.com/markdown-it-attrs/-/markdown-it-attrs-4.1.6.tgz#2bc331c7649d8c6396a0613c2bba1093f3e64da9"
+  integrity sha512-O7PDKZlN8RFMyDX13JnctQompwrrILuz2y43pW2GagcwpIIElkAdfeek+erHfxUOlXWPsjFeWmZ8ch1xtRLWpA==
+
 markdown-it-emoji@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmmirror.com/markdown-it-emoji/-/markdown-it-emoji-3.0.0.tgz#8475a04d671d7c93f931b76fb90c582768b7f0b5"

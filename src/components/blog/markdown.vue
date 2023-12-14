@@ -22,6 +22,8 @@ import { full as emoji } from 'markdown-it-emoji'
 import MarkdownItTextualUml from 'markdown-it-textual-uml'
 // @ts-ignore
 import MarkdownItHighlightjs from 'markdown-it-highlightjs'
+// @ts-ignore
+import MarkdownItAttrs from 'markdown-it-attrs'
 
 import mermaid from 'mermaid'
 
@@ -37,6 +39,7 @@ markdown.use(MarkdownItMark)
 markdown.use(emoji)
 markdown.use(MarkdownItTextualUml)
 markdown.use(MarkdownItHighlightjs)
+markdown.use(MarkdownItAttrs)
 
 const props = defineProps<{
     content: string

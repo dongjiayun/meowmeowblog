@@ -26,6 +26,7 @@
     "lodash": "^4.17.21",
     "markdown-it": "^13.0.2",
     "markdown-it-abbr": "^2.0.0",
+    "markdown-it-attrs": "^4.1.6",
     "markdown-it-emoji": "^3.0.0",
     "markdown-it-footnote": "^4.0.0",
     "markdown-it-highlightjs": "^4.0.1",

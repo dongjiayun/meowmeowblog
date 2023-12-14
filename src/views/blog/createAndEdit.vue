@@ -13,6 +13,7 @@
         <div class="editor-content">
             <div ref="inputRef" class="editor-input">
                 <el-input
+                    id="textarea"
                     v-model="content"
                     type="textarea"
                     placeholder="请输入内容"
@@ -33,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, ref } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue'
 // @ts-ignore
 import { articleModel, ArticleModel } from '@/api'
 import { useRoute, useRouter } from 'vue-router'
@@ -131,10 +132,42 @@ const handleSubmit = async() => {
     })
 }
 
+const handleTabKeyDown = (event, textarea) => {
+    if (event.key === 'Tab') {
+        event.preventDefault() // 阻止Tab的默认行为
+        const start = textarea.selectionStart // 获取光标位置
+        const end = textarea.selectionEnd
+        const target = event.target
+        const value = target.value // 获取textarea的值
+
+        // 在光标位置插入4个空格
+        target.value = value.substring(0, start) + '    ' + value.substring(end)
+
+        // 更新光标位置
+        textarea.selectionStart = textarea.selectionEnd = start + 4
+    }
+}
+
+let textarea
+
 onMounted(() => {
     if (isEdit) {
         getData()
     }
+    nextTick(() => {
+        textarea = document.getElementById('textarea')
+        if (textarea) {
+            textarea.addEventListener('keydown', event => {
+                handleTabKeyDown(event, textarea)
+            })
+        }
+    })
+})
+
+onUnmounted(() => {
+    textarea.removeEventListener('keydown', event => {
+        handleTabKeyDown(event, textarea)
+    })
 })
 </script>
 
