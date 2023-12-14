@@ -21,6 +21,8 @@ import { full as emoji } from 'markdown-it-emoji'
 // @ts-ignore
 import MarkdownItTextualUml from 'markdown-it-textual-uml'
 // @ts-ignore
+import MarkdownItHighlightjs from 'markdown-it-highlightjs'
+
 import mermaid from 'mermaid'
 
 import { computed, nextTick, onMounted, watch } from 'vue'
@@ -34,7 +36,7 @@ markdown.use(MarkdownItAbbr)
 markdown.use(MarkdownItMark)
 markdown.use(emoji)
 markdown.use(MarkdownItTextualUml)
-markdown.use(require('markdown-it-highlightjs'))
+markdown.use(MarkdownItHighlightjs)
 
 const props = defineProps<{
     content: string
