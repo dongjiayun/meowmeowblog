@@ -46,13 +46,17 @@ const previewContent = computed(() => {
     return markdown.render(props.content)
 })
 
-watch(() => props.content, () => {
+watch(() => previewContent, () => {
+    renderMermaid()
+})
+
+const renderMermaid = () => {
     nextTick(() => {
         mermaid.run({
             nodes: document.querySelectorAll('#markdown-body .mermaid'),
         })
     })
-})
+}
 
 onMounted(() => {
     nextTick(() => {
@@ -60,6 +64,7 @@ onMounted(() => {
             startOnLoad: true,
             theme: 'light'
         })
+        renderMermaid()
     })
 })
 </script>
