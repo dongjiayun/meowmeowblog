@@ -5,8 +5,9 @@
 
 ## Personal Advantages:
 > Extensive experience in development. As the team leader, I was responsible for leading the construction of the pet management backend architecture, micro-frontendization, component libraries, and other infrastructure research and development work for Ping An盟宠. I also led the development of the SSR official website and the pet mall mini-program matrix. Additionally, I led the development of the pet H5 mall and various other projects. With years of hands-on experience, I have extensive practical knowledge.
-> Proficient in JavaScript, TypeScript, Vue2, Vue3, Nuxt.js, Sass, WeChat mini-programs, and other development.
+> Proficient in JavaScript, TypeScript, Vue2, Vue3, Nuxt.js, Sass, React18, Redux, WeChat mini-programs, and other development.
 > With rich experience in Jenkins and Nginx deployment, I can develop and deploy large-scale projects end-to-end.
+> Proficient in server-side development using Golang, MySQL, and Redis.
 
 ---
 
