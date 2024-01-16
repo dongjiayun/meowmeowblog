@@ -87,9 +87,6 @@ const checkPassword = () => {
     }
     const secret = resumeKey
     const password = MD5(secret + moment().format('MMDD')).toString()
-    if (routePassword === 'Dongjiayun932') {
-        return getContent()
-    }
     if (routePassword && routePassword === password) {
         return getContent()
     }
@@ -99,7 +96,7 @@ const checkPassword = () => {
             cancelButtonText: '下次一定',
         })
             .then(({ value }) => {
-                if (value === password) {
+                if (value === password || value === 'Dongjiayun932') {
                     resolve(true)
                     getContent()
                 } else {
