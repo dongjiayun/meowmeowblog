@@ -72,6 +72,7 @@
         >
             <el-image
                 class="meow-layout-cursor-image"
+                :class="{ cursorActived }"
                 :src="getSrc('base/pixel_rocket.png')"
             />
         </view>
@@ -114,17 +115,25 @@ const mouseTop = ref(0)
 
 const showCursor = ref(false)
 
+const cursorActived = ref(false)
+
 onMounted(() => {
     appStore.getTheme()
     window.addEventListener('mousemove', e => {
-        mouseLeft.value = e.clientX + 2
-        mouseTop.value = e.clientY + 2
+        mouseLeft.value = e.clientX + 4
+        mouseTop.value = e.clientY + 4
     })
     document.body.addEventListener('mouseleave', () => {
         showCursor.value = false
     })
     document.body.addEventListener('mouseenter', () => {
         showCursor.value = true
+    })
+    window.addEventListener('mousedown', () => {
+        cursorActived.value = true
+    })
+    window.addEventListener('mouseup', () => {
+        cursorActived.value = false
     })
 })
 
@@ -365,8 +374,12 @@ onBeforeUnmount(() => {
         &-image{
             width: 30px;
             height: 30px;
-            transform: rotate(-90deg);
+            transform: rotate(-90deg) scale(1);
             //animation: cursor .8s infinite;
+            transition:all 0.1s;
+            &.cursorActived{
+                transform: rotate(-90deg) scale(1.1);
+            }
         }
         @keyframes cursor {
             0%{
