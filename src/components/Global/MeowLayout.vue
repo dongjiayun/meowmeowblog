@@ -243,7 +243,7 @@ onBeforeUnmount(() => {
 <style scoped lang="scss">
 .meow-layout{
     *{
-        cursor:none;
+        cursor:none!important;
     }
     &.isPixelTheme{
         background: url("@/assets/home/cat.png");
@@ -352,7 +352,7 @@ onBeforeUnmount(() => {
             width: 30px;
             height: 30px;
             transform: rotate(-90deg);
-            animation: cursor .8s infinite;
+            //animation: cursor .8s infinite;
         }
         @keyframes cursor {
             0%{
