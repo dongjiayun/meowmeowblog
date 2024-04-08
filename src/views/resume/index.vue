@@ -100,7 +100,7 @@ const checkPassword = () => {
     }
     const secret = resumeKey
     const password = MD5(secret + moment().format('MMDD')).toString()
-    if (routePassword && routePassword === password && routePassword === 'SpecialPrivilege') {
+    if (routePassword && (routePassword === password || routePassword === 'SpecialPrivilege')) {
         return getContent()
     }
     return new Promise(resolve => {
