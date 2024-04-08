@@ -31,7 +31,10 @@
     <div v-else class="blog-resume">
         <div class="blog-resume-apply">
             <el-image class="blog-resume-apply-qrcode" :src="getSrc('docs/qrcode.jpg')" />
-            <div class="blog-resume-button" @click="checkPassword">申请访问</div>
+            <div
+                :class="{ 'pixel-button': isPixel ,'blog-button': !isPixel }"
+                @click="checkPassword"
+            >{{ isPixel ? 'Apply Access' : '申请访问' }}</div>
         </div>
     </div>
 </template>
@@ -45,7 +48,7 @@ export default {
 // @ts-ignore
 import { MD5 } from 'crypto-js'
 import { getSrc, commonExport, copy } from '@/utils'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 // @ts-ignore
 import MarkdownIt from 'markdown-it'
 import { ElMessageBox, ElMessage } from 'element-plus'
@@ -55,6 +58,8 @@ import html2canvas from 'html2canvas'
 import { useRoute, useRouter } from 'vue-router'
 // @ts-ignore
 import FileSaver from 'file-saver'
+import { useAppStore } from '@/stores/app'
+import { storeToRefs } from 'pinia'
 
 const route = useRoute()
 
@@ -69,6 +74,14 @@ const content = ref('')
 const hasPassed = ref(false)
 
 const lang = ref('zh')
+
+const appStore = useAppStore()
+
+const theme = storeToRefs(appStore).theme
+
+const isPixel = computed(() => {
+    return theme.value === 'pixel'
+})
 
 const getContent = async() => {
     hasPassed.value = true
@@ -87,7 +100,7 @@ const checkPassword = () => {
     }
     const secret = resumeKey
     const password = MD5(secret + moment().format('MMDD')).toString()
-    if (routePassword && routePassword === password) {
+    if (routePassword && routePassword === password && routePassword === 'SpecialPrivilege') {
         return getContent()
     }
     return new Promise(resolve => {
@@ -171,25 +184,12 @@ onMounted(async() => {
 .blog-resume{
     min-height: 600px;
     position: relative;
+    padding-bottom: 20px;
     &-header{
         display: flex;
         justify-content: flex-end;
         align-items: center;
         height: 60px;
-    }
-    &-button{
-        padding:10px 20px;
-        border-radius: 20px;
-        font-size: 32px;
-        background: #FFF;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        cursor: pointer;
-        color: #FFAA2C;
-        transition: all 0.1s;
-        &:hover{
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-            transform:  scale(1.1);
-        }
     }
     &-apply{
         display: flex;

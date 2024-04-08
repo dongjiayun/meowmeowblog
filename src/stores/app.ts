@@ -36,7 +36,7 @@ export const useAppStore = defineStore('app', {
         },
         getTheme() {
             const theme = Local.get('pa_theme')
-            this.theme = theme
+            this.theme = theme || 'pixel'
         },
         setTheme(theme: string) {
             if (theme) {

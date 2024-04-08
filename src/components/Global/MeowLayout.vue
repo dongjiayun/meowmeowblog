@@ -119,15 +119,12 @@ onMounted(() => {
     window.addEventListener('mousemove', e => {
         mouseLeft.value = e.clientX + 2
         mouseTop.value = e.clientY + 2
-        console.log(e.clientX, e.clientY)
     })
     document.body.addEventListener('mouseleave', () => {
         showCursor.value = false
-        console.log('mouseleave')
     })
     document.body.addEventListener('mouseenter', () => {
         showCursor.value = true
-        console.log('mouseenter')
     })
 })
 
@@ -147,14 +144,27 @@ const isPixel = computed(() => {
     return theme.value === 'pixel'
 })
 
-const menus = ref([
+const menusCat = [
     { name: '博客', route: 'blog' },
     { name: '博客mobile', route: 'blog-h5' },
     { name: '留言板', route: 'message' },
     { name: '我的', route: 'mine' },
     { name: '关于', route: 'about' },
     { name: '简历', route: 'resume' },
-])
+]
+
+const menusPixel = [
+    { name: 'Blog', route: 'blog' },
+    { name: 'H5 Blog ', route: 'blog-h5' },
+    { name: 'Message', route: 'message' },
+    { name: 'Mine', route: 'mine' },
+    { name: 'About', route: 'about' },
+    { name: 'Resume', route: 'resume' },
+]
+
+const menus = computed(() => {
+    return theme.value === 'cat' ? menusCat : menusPixel
+})
 
 const handleHome = () => {
     router.push({
@@ -247,6 +257,10 @@ onBeforeUnmount(() => {
     }
     &.isPixelTheme{
         background: url("@/assets/home/cat.png");
+        .meow-layout-header-routes-item{
+            color: #FFAA2C;
+            text-shadow: 2px 2px #000, -2px -2px #000, 0 -2px #000, 0 2px #000, 2px 0 #000, -2px 0 #000;
+        }
     }
     &-header{
         height: 60px;
