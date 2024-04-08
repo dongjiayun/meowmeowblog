@@ -1,8 +1,8 @@
 <template>
-    <div id="layout" class="meow-layout">
+    <div id="layout" class="meow-layout" :class="{ isPixelTheme: theme === 'pixel' }">
         <div class="meow-layout-header">
             <div class="meow-layout-header-logo" @click="handleHome">
-                <el-image class="meow-layout-header-logo-image" :src="getSrc('base/logo.jpg')" />
+                <el-image class="meow-layout-header-logo-image" :src="logo" />
                 <div class="meow-layout-header-logo-label">喵喵喵</div>
             </div>
             <div class="meow-layout-header-routes">
@@ -13,6 +13,18 @@
                     :class="{ active: currentRouteName === item.route }"
                     @click="$router.push({ name: item.route })"
                 >{{ item.name }}</div>
+            </div>
+            <div class="meow-layout-header-version">
+                <el-switch
+                    v-model="theme"
+                    inline-prompt
+                    active-text="像素风"
+                    inactive-text="猫猫风格"
+                    style="--el-switch-on-color: #FFAA2C; --el-switch-off-color: #FFAA2C"
+                    active-value="pixel"
+                    inactive-value="cat"
+                    @change="handleTheme"
+                />
             </div>
             <div class="meow-layout-header-notice" @click="handleNotice">
                 <el-badge
@@ -39,11 +51,30 @@
         <div
             v-if="enableBack"
             class="meow-layout-back"
+            :class="{ 'pixel-button': isPixel ,'blog-button': !isPixel }"
             @click="handleBack"
         >
-            <el-icon :size="30" color="#FFAA2C"><ArrowLeft /></el-icon>
-            <div>返回</div>
+            <el-icon v-if="!isPixel" :size="30" color="#FFAA2C"><ArrowLeft /></el-icon>
+            <div>{{ isPixel ? 'Back' : '返回' }}</div>
         </div>
+        <view class="meow-layout-bottom">
+            <view class="meow-layout-bottom-item">喵喵喵</view>
+            <view class="meow-layout-bottom-item">沪ICP备2023031020号</view>
+            <view class="meow-layout-bottom-item">Copyright © {{ moment().format('YYYY') }}</view>
+        </view>
+        <view
+            v-if="showCursor"
+            class="meow-layout-cursor"
+            :style="{
+                left: mouseLeft + 'px',
+                top: mouseTop + 'px',
+            }"
+        >
+            <el-image
+                class="meow-layout-cursor-image"
+                :src="getSrc('base/pixel_rocket.png')"
+            />
+        </view>
     </div>
 </template>
 
@@ -58,9 +89,14 @@ import { checkLogin } from '@/utils/auth'
 import { noticeModel } from '@/api'
 import { Local } from '@/utils/storage'
 import { ElNotification } from 'element-plus'
+import { useAppStore } from '@/stores/app'
+import moment from 'moment'
 
 const userStore = useUserStore()
+const appStore = useAppStore()
+
 const token = storeToRefs(userStore).token
+const theme = storeToRefs(appStore).theme
 
 const route = useRoute()
 
@@ -72,8 +108,43 @@ const currentRouteName = computed(() => {
 
 const enableBack = ref(false)
 
+const mouseLeft = ref(0)
+
+const mouseTop = ref(0)
+
+const showCursor = ref(false)
+
+onMounted(() => {
+    appStore.getTheme()
+    window.addEventListener('mousemove', e => {
+        mouseLeft.value = e.clientX + 2
+        mouseTop.value = e.clientY + 2
+        console.log(e.clientX, e.clientY)
+    })
+    document.body.addEventListener('mouseleave', () => {
+        showCursor.value = false
+        console.log('mouseleave')
+    })
+    document.body.addEventListener('mouseenter', () => {
+        showCursor.value = true
+        console.log('mouseenter')
+    })
+})
+
 watch(route, () => {
     enableBack.value = history.state.position > 1 && currentRouteName.value !== 'home'
+})
+
+const logo = computed(() => {
+    const logoMap = {
+        'cat': getSrc('base/logo.jpg'),
+        'pixel': getSrc('base/pixel_logo.png')
+    }
+    return logoMap[theme.value]
+})
+
+const isPixel = computed(() => {
+    return theme.value === 'pixel'
 })
 
 const menus = ref([
@@ -154,6 +225,10 @@ const handleNotice = () => {
     })
 }
 
+const handleTheme = e => {
+    appStore.setTheme(e)
+}
+
 onMounted(() => {
     getNoticeNum()
     initNoticeInterval()
@@ -167,6 +242,12 @@ onBeforeUnmount(() => {
 
 <style scoped lang="scss">
 .meow-layout{
+    *{
+        cursor:none;
+    }
+    &.isPixelTheme{
+        background: url("@/assets/home/cat.png");
+    }
     &-header{
         height: 60px;
         backdrop-filter: blur(10px);
@@ -210,6 +291,11 @@ onBeforeUnmount(() => {
                 }
             }
         }
+        &-version{
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+        }
         &-profile{
             font-size: 28px;
             font-weight: bold;
@@ -244,19 +330,63 @@ onBeforeUnmount(() => {
         position: fixed;
         left: 40px;
         top:100px;
-        padding: 10px 20px;
-        border-radius: 20px;
-        background: #fff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #FFAA2C;
-        font-size: 32px;
-        cursor: pointer;
-        transition: .1s;
-        &:hover{
-            transform: scale(1.1);
+    }
+    &-bottom{
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color:#FFAA2C;
+        background: #F5F5F5;
+        &-item{
+            margin:  0 10px;
+        }
+    }
+    &-cursor{
+        position: fixed;
+        z-index: 10000;
+        &-image{
+            width: 30px;
+            height: 30px;
+            transform: rotate(-90deg);
+            animation: cursor .8s infinite;
+        }
+        @keyframes cursor {
+            0%{
+                scale: 1;
+            }
+            50%{
+                scale: 1.1;
+            }
+            100%{
+                scale: 1;
+            }
+        }
+        @keyframes light {
+            0%{
+                scale: 1;
+            }
+            50%{
+                scale: 1.6;
+            }
+            100%{
+                scale: 1;
+            }
+        }
+        &:after{
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 10px;
+            background: #FFEE99;
+            right: -2px;
+            bottom: 4px;
+            box-shadow:0 0 10px #FFEE99;
+            animation: light .4s infinite;
         }
     }
 }

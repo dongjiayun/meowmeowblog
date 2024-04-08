@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <div class="home-main">
+        <div v-if="theme === 'cat'" class="home-main">
             <div
                 v-for="(item,index) in list"
                 :key="index"
@@ -9,22 +9,22 @@
                 <el-image fit="cover" class="home-main-item-inner" :src="item" />
             </div>
         </div>
-        <view class="home-button" @click="handleBlog">
-            进入博客
-        </view>
-        <view class="home-bottom">
-            <view class="home-bottom-item">喵喵喵</view>
-            <view class="home-bottom-item">沪ICP备2023031020号</view>
-            <view class="home-bottom-item">Copyright © {{ moment().format('YYYY') }}</view>
+        <div v-else-if="theme === 'pixel'" class="home-main home-main-pixel" />
+        <view
+            class="home-button"
+            :class="{ 'pixel-button': isPixel ,'blog-button': !isPixel }"
+            @click="handleBlog"
+        >
+            {{ isPixel ? 'Enter Blog' : '进入博客' }}
         </view>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import moment from 'moment'
-import { getSrc } from '@/utils'
+import { useAppStore } from '@/stores/app'
+import { storeToRefs } from 'pinia'
 
 const list = ref([
     'https://qa-res.ipetapi.com/meowmeowmeow/1.gif',
@@ -38,6 +38,13 @@ const list = ref([
     'https://qa-res.ipetapi.com/meowmeowmeow/9.gif',
     'https://qa-res.ipetapi.com/meowmeowmeow/10.gif',
 ])
+
+const appStore = useAppStore()
+const theme = storeToRefs(appStore).theme
+
+const isPixel = computed(() => {
+    return theme.value === 'pixel'
+})
 
 const router = useRouter()
 
@@ -57,6 +64,26 @@ const handleBlog = () => {
         align-items: center;
         height:calc(100vh - 60px);
         overflow: hidden;
+        &-pixel{
+            animation: pixel_bg 1s infinite;
+            @keyframes pixel_bg {
+                0%{
+                    background: url("@/assets/home/home_1.png");
+                }
+                25%{
+                    background: url("@/assets/home/home_2.png");
+                }
+                50%{
+                    background: url("@/assets/home/home_3.png");
+                }
+                75%{
+                    background: url("@/assets/home/home_2.png");
+                }
+                100%{
+                    background: url("@/assets/home/home_1.png");
+                }
+            }
+        }
         &-item{
             position: relative;
             left: -200px;
@@ -87,28 +114,6 @@ const handleBlog = () => {
         top:50%;
         left: 50%;
         transform: translate(-50%,-50%);
-        padding:10px 20px;
-        border-radius: 20px;
-        font-size: 32px;
-        background: #FFF;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        cursor: pointer;
-        color: #FFAA2C;
-        transition: all 0.1s;
-        &:hover{
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-            transform:  translate(-50%,-50%) scale(1.1);
-        }
-    }
-    &-bottom{
-        padding: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color:#FFAA2C;
-        &-item{
-            margin:  0 10px;
-        }
     }
 }
 </style>

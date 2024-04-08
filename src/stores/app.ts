@@ -7,6 +7,7 @@ export const useAppStore = defineStore('app', {
         authCode: '',
         showLoading: false,
         isWx: false,
+        theme: 'pixel',
     }),
     actions: {
         setBizId(bizId: string) {
@@ -32,6 +33,18 @@ export const useAppStore = defineStore('app', {
         getAuthCode() {
             const authCode = Local.get('pa_auth_code')
             this.authCode = authCode
+        },
+        getTheme() {
+            const theme = Local.get('pa_theme')
+            this.theme = theme
+        },
+        setTheme(theme: string) {
+            if (theme) {
+                this.theme = theme
+                Local.set('pa_theme', theme)
+            } else {
+                this.getTheme()
+            }
         }
     }
 })
