@@ -14,10 +14,16 @@
                 <div
                     v-for="(item,index) in menus"
                     :key="index"
-                    class="meow-layout-header-routes-item"
-                    :class="{ active: currentRouteName === item.route }"
-                    @click="$router.push({ name: item.route })"
-                >{{ item.name }}</div>
+                >
+                    <div
+                        v-if="item.route !== 'mine' || (item.route === 'mine' && token)"
+                        class="meow-layout-header-routes-item"
+                        :class="{ active: currentRouteName === item.route }"
+                        @click="$router.push({ name: item.route })"
+                    >
+                        {{ item.name }}
+                    </div>
+                </div>
             </div>
             <div class="meow-layout-header-version">
                 <el-switch
@@ -81,8 +87,8 @@
                 :src="getSrc('base/pixel_rocket.png')"
             />
         </view>
-        <view class="meow-layout-trinket" />
-        <view v-if="isPixel" class="meow-layout-tetris">
+        <view v-if="!isHome" class="meow-layout-trinket" />
+        <view v-if="isPixel && !isHome" class="meow-layout-tetris">
             <tetris />
         </view>
     </div>
@@ -162,6 +168,10 @@ const logo = computed(() => {
 
 const isPixel = computed(() => {
     return theme.value === 'pixel'
+})
+
+const isHome = computed(() => {
+    return currentRouteName.value === 'home'
 })
 
 const menusCat = [
@@ -288,6 +298,8 @@ onBeforeUnmount(() => {
 <style scoped lang="scss">
 .meow-layout{
     position: relative;
+    width: 100vw;
+    overflow: hidden;
     *{
         cursor:none!important;
     }
@@ -378,6 +390,7 @@ onBeforeUnmount(() => {
     }
     &-back{
         position: fixed;
+        z-index: 20;
         left: 40px;
         top:100px;
         display: flex;

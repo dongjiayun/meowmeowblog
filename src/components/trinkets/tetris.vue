@@ -92,21 +92,26 @@ export default {
         }
     },
     mounted() {
-        this.bgCanvas = this.$refs.bgCanvas
-        this.fgCanvas = this.$refs.fgCanvas
-        this.bgCtx = this.bgCanvas.getContext('2d')
-        this.fgCtx = this.fgCanvas.getContext('2d')
-        this.bgCanvas.width = this.fgCanvas.width = this.width
-        this.bgCanvas.height = this.fgCanvas.height = this.height
-        this.bgCanvas.style.left = this.posX + 'px'
-        this.bgCanvas.style.top = this.posY + 'px'
-        this.fgCanvas.style.left = this.posX + 'px'
-        this.fgCanvas.style.top = this.posY + 'px'
-
         this.init()
+        window.addEventListener('resize', this.init)
+    },
+    beforeUnmount() {
+        window.removeEventListener('resize', this.init)
     },
     methods: {
         init() {
+            this.width = window.innerWidth
+            this.height = window.innerHeight
+            this.bgCanvas = this.$refs.bgCanvas
+            this.fgCanvas = this.$refs.fgCanvas
+            this.bgCtx = this.bgCanvas.getContext('2d')
+            this.fgCtx = this.fgCanvas.getContext('2d')
+            this.bgCanvas.width = this.fgCanvas.width = this.width
+            this.bgCanvas.height = this.fgCanvas.height = this.height
+            this.bgCanvas.style.left = this.posX + 'px'
+            this.bgCanvas.style.top = this.posY + 'px'
+            this.fgCanvas.style.left = this.posX + 'px'
+            this.fgCanvas.style.top = this.posY + 'px'
             this.curPiece = {
                 data: null,
                 colors: [0, 0, 0],
