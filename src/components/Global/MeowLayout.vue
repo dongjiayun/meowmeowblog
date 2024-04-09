@@ -299,7 +299,6 @@ onBeforeUnmount(() => {
 .meow-layout{
     position: relative;
     width: 100vw;
-    overflow: hidden;
     *{
         cursor:none!important;
     }
