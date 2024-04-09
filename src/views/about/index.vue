@@ -9,15 +9,15 @@
                 年底比较空,花了一个月折腾了个🐱🐱社区.
             </div>
             <div>
-                桌面端项目使用vue3+ts+element-plus开发
+                桌面端项目使用了Vue 3 + TypeScript + Element Plus开发，
             </div>
             <div>
-                移动端项目使用uniapp开发,结合打磨了将近1年的uni-ui二开框架,前端建站只花了5个工作日.
+                移动端项目则采用了UniApp结合打磨了将近1年的Uni-UI二开框架，前端建站只花了5个工作日。🐾🚀
             </div>
             <div>
-                后端使用基于gin的golang框架开发.
+                后端部分则采用了基于Gin的GoLang框架进行开发。
             </div>
-            <h3>小作坊github(其实就是本人github,产研团队就是我自己)</h3>
+            <h3>这个小作坊托管在我的GitHub（其实就是我自己的个人仓库），欢迎来逛逛！🛠️🌟</h3>
             <div class="copy" @click="handleJump('https://github.com/dongjiayun/MeowMeowHome.git')">移动端前端源代码</div>
             <div class="copy" @click="handleJump('https://github.com/dongjiayun/meowmeowblog')">前端桌面端源代码</div>
             <div class="copy" @click="handleJump('https://github.com/dongjiayun/pet-family-server.git')">服务端源代码</div>
