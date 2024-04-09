@@ -1,5 +1,10 @@
 <template>
-    <div id="layout" class="meow-layout" :class="{ isPixelTheme: theme === 'pixel' }">
+    <div
+        id="layout"
+        class="meow-layout"
+        :class="{ isPixelTheme: theme === 'pixel' }"
+        :style="isPixel ? `background: url(${bg})` : ''"
+    >
         <div class="meow-layout-header">
             <div class="meow-layout-header-logo" @click="handleHome">
                 <el-image class="meow-layout-header-logo-image" :src="logo" />
@@ -18,7 +23,7 @@
                 <el-switch
                     v-model="theme"
                     inline-prompt
-                    active-text="像素风"
+                    active-text="pixelart"
                     inactive-text="猫猫风格"
                     style="--el-switch-on-color: #FFAA2C; --el-switch-off-color: #FFAA2C"
                     active-value="pixel"
@@ -76,6 +81,10 @@
                 :src="getSrc('base/pixel_rocket.png')"
             />
         </view>
+        <view class="meow-layout-trinket" />
+        <view v-if="isPixel" class="meow-layout-tetris">
+            <tetris />
+        </view>
     </div>
 </template>
 
@@ -92,6 +101,7 @@ import { Local } from '@/utils/storage'
 import { ElNotification } from 'element-plus'
 import { useAppStore } from '@/stores/app'
 import moment from 'moment'
+import tetris from '@/components/trinkets/tetris.vue'
 
 const userStore = useUserStore()
 const appStore = useAppStore()
@@ -139,6 +149,7 @@ onMounted(() => {
 
 watch(route, () => {
     enableBack.value = history.state.position > 1 && currentRouteName.value !== 'home'
+    getRandomBg()
 })
 
 const logo = computed(() => {
@@ -168,7 +179,7 @@ const menusPixel = [
     { name: 'Message', route: 'message' },
     { name: 'Mine', route: 'mine' },
     { name: 'About', route: 'about' },
-    { name: 'Resume', route: 'resume' },
+    { name: 'Resumes', route: 'resume' },
 ]
 
 const menus = computed(() => {
@@ -248,6 +259,21 @@ const handleTheme = e => {
     appStore.setTheme(e)
 }
 
+const bg = ref('')
+
+const getRandomBg = () => {
+    const bgMap = [
+        getSrc('home/cat.png'),
+        getSrc('home/jienigui.png'),
+        getSrc('home/kedaya.png'),
+        getSrc('home/qiutian.png'),
+        getSrc('home/orangutan.png'),
+        getSrc('home/dog.png'),
+        getSrc('home/pig.png'),
+    ]
+    bg.value = bgMap[Math.floor(Math.random() * bgMap.length)]
+}
+
 onMounted(() => {
     getNoticeNum()
     initNoticeInterval()
@@ -261,11 +287,11 @@ onBeforeUnmount(() => {
 
 <style scoped lang="scss">
 .meow-layout{
+    position: relative;
     *{
         cursor:none!important;
     }
     &.isPixelTheme{
-        background: url("@/assets/home/cat.png");
         .meow-layout-header-routes-item{
             color: #FFAA2C;
             text-shadow: 2px 2px #000, -2px -2px #000, 0 -2px #000, 0 2px #000, 2px 0 #000, -2px 0 #000;
@@ -348,6 +374,7 @@ onBeforeUnmount(() => {
         border-radius: 20px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         padding: 20px;
+        z-index: 10;
     }
     &-back{
         position: fixed;
@@ -415,6 +442,16 @@ onBeforeUnmount(() => {
             box-shadow:0 0 10px #FFEE99;
             animation: light .4s infinite;
         }
+    }
+    &-trinket{
+        position: absolute;
+        left: 200px;
+        bottom: 200px;
+    }
+    &-tetris{
+        position: absolute;
+        bottom: calc(100vh + 60px);
+        left: 0px;
     }
 }
 </style>
