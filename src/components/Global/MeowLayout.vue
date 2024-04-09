@@ -287,6 +287,8 @@ const getRandomBg = () => {
         getSrc('home/tom.png'),
         getSrc('home/mario.png'),
         getSrc('home/unicorn.png'),
+        getSrc('home/liyuwang.png'),
+        getSrc('home/shuiyueyu.png'),
     ]
     bg.value = bgMap[Math.floor(Math.random() * bgMap.length)]
 }
