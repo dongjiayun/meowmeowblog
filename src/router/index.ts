@@ -84,6 +84,18 @@ const message = [
     }
 ]
 
+const common = [
+    {
+        path: '/404',
+        name: '404',
+        component: () => import('@/views/common/404.vue')
+    },
+    {
+        path: '/*',
+        redirect: '404'
+    }
+]
+
 const routes: Array<any> = [
     ...base,
     ...blog,
@@ -91,7 +103,8 @@ const routes: Array<any> = [
     ...notice,
     ...user,
     ...about,
-    ...message
+    ...message,
+    ...common
 ]
 
 const router = createRouter({
