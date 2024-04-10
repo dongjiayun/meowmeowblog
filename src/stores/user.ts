@@ -1,8 +1,9 @@
-import { defineStore, storeToRefs } from 'pinia'
+import { defineStore } from 'pinia'
 import { Loading } from '@/utils'
 import { AuthModel } from '@/api'
 import { ElMessage } from 'element-plus'
 import { Local } from '@/utils/storage'
+import router from '@/router'
 
 export const useUserStore = defineStore('user', {
     state: () => ({
@@ -48,6 +49,7 @@ export const useUserStore = defineStore('user', {
                 this.avatar = ''
                 this.email = ''
                 Local.remove('pa_userinfo')
+                router.replace({ name: 'home' })
             })
         },
         refresh() {
