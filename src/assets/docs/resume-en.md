@@ -8,13 +8,13 @@
 > - WeChat: the same as mobile
 
 ## Personal Advantages:
-> I am an experienced developer with a strong background in leading teams and architecting backend systems for Pet Alliance management platforms. I specialize in micro-frontends, component libraries, and have led the development of SSR (Server-Side Rendering) websites, such as Pet Alliance official websites. Additionally, I have led the development of Pet Alliance mini-program ecosystems, including the Pet Alliance shopping mini-program, and H5 mall projects.
-> JavaScript, TypeScript, Vue.js (both Vue 2 and Vue 3), Nuxt.js, and Sass.
-> React 18, Redux, less.
-> And extensive experience in developing applications using uni-app for WeChat mini-programs and other platforms.
-> Abundant experience in micro-frontends and in retrofitting projects with micro-frontends.
-> Deployment processes using Jenkins and Nginx, enabling me to handle the entire development and deployment lifecycle of large-scale projects effectively.
-> Backend development using Golang, MySQL, and Redis, enabling me to deliver robust server-side solutions.
+> - I am an experienced developer with a strong background in leading teams and architecting backend systems for Pet Alliance management platforms. I specialize in micro-frontends, component libraries, and have led the development of SSR (Server-Side Rendering) websites, such as Pet Alliance official websites. Additionally, I have led the development of Pet Alliance mini-program ecosystems, including the Pet Alliance shopping mini-program, and H5 mall projects.
+> - JavaScript, TypeScript, Vue.js (both Vue 2 and Vue 3), Nuxt.js, and Sass.
+> - React 18, Redux, less.
+> - And extensive experience in developing applications using uni-app for WeChat mini-programs and other platforms.
+> - Abundant experience in micro-frontends and in retrofitting projects with micro-frontends.
+> - Deployment processes using Jenkins and Nginx, enabling me to handle the entire development and deployment lifecycle of large-scale projects effectively.
+> - Backend development using Golang, MySQL, and Redis, enabling me to deliver robust server-side solutions.
 
 ---
 
