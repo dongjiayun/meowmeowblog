@@ -33,7 +33,7 @@
             <el-image class="blog-resume-apply-qrcode" :src="getSrc('docs/qrcode.jpg')" />
             <div
                 :class="{ 'pixel-button': isPixel ,'blog-button': !isPixel }"
-                @click="checkPassword"
+                @click="handleCheckPassword"
             >{{ isPixel ? 'Apply Access' : '申请访问' }}</div>
         </div>
     </div>
@@ -103,6 +103,11 @@ const checkPassword = () => {
     if (routePassword && (routePassword === password || routePassword === 'SpecialPrivilege')) {
         return getContent()
     }
+}
+
+const handleCheckPassword = () => {
+    const secret = resumeKey
+    const password = MD5(secret + moment().format('MMDD')).toString()
     return new Promise(resolve => {
         ElMessageBox.prompt('请输入邀请码', '邀请码', {
             confirmButtonText: '确认',
@@ -117,7 +122,6 @@ const checkPassword = () => {
                         type: 'error',
                         message: `邀请码错误`,
                     })
-                    checkPassword()
                 }
             })
     })
