@@ -27,6 +27,7 @@
 > - Managing the backend architecture, micro-front-end, component library, and business development
 > - h5 mall architecture, component library, and business development
 > - scattered demand technology and development support
+> - Development and integration of H5 pages within the Ping An Property Insurance "Good Life, Good Car Owner" app.
 
 > #### Performance:
 >  - Led the construction of the company's management backend architecture, built a low-code configurable component library based on Element-UI, greatly simplified the development cycle and cost of the backend system, and improved code consistency and readability.
@@ -104,7 +105,8 @@
 
 ---
 ## English Level
-> College English Test Band 6
+> - College English Test Band 6
+> - Be fluent in reading English documentation without difficulty.
 
 ## Personal homepage
 > - [github: https://github.com/dongjiayun](https://github.com/dongjiayun)

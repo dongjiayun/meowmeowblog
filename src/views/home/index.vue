@@ -122,7 +122,7 @@ const handleBlog = () => {
     }
     &-trinket{
         position: absolute;
-        right: 40px;
+        left: 40px;
         bottom: 40px;
         width: 360px;
         height: 600px;
