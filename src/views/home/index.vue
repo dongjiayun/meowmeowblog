@@ -10,13 +10,16 @@
             </div>
         </div>
         <div v-else-if="theme === 'pixel'" class="home-main home-main-pixel" />
-        <view
+        <div
             class="home-button"
             :class="{ 'pixel-button': isPixel ,'blog-button': !isPixel }"
             @click="handleBlog"
         >
             {{ isPixel ? 'Enter Blog' : '进入博客' }}
-        </view>
+        </div>
+        <div v-if="isPixel" class="home-trinket">
+            <capsule />
+        </div>
     </div>
 </template>
 
@@ -25,6 +28,7 @@ import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAppStore } from '@/stores/app'
 import { storeToRefs } from 'pinia'
+import capsule from '@/components/trinkets/capsule.vue'
 
 const list = ref([
     'https://qa-res.ipetapi.com/meowmeowmeow/1.gif',
@@ -59,6 +63,7 @@ const handleBlog = () => {
 <style lang="scss" scoped>
 .home{
     min-height: calc(100vh - 60px);
+    position: relative;
     &-main{
         display: flex;
         align-items: center;
@@ -114,6 +119,14 @@ const handleBlog = () => {
         top:50%;
         left: 50%;
         transform: translate(-50%,-50%);
+    }
+    &-trinket{
+        position: absolute;
+        right: 40px;
+        bottom: 40px;
+        width: 360px;
+        height: 600px;
+        z-index: 10;
     }
 }
 </style>

@@ -95,7 +95,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, provide, ref, watch } from 'vue'
 import { getSrc, noticeJump } from '@/utils'
 import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
@@ -108,6 +108,7 @@ import { ElNotification } from 'element-plus'
 import { useAppStore } from '@/stores/app'
 import moment from 'moment'
 import tetris from '@/components/trinkets/tetris.vue'
+import Bus from '@/utils/bus'
 
 const userStore = useUserStore()
 const appStore = useAppStore()
@@ -130,6 +131,8 @@ const mouseLeft = ref(0)
 const mouseTop = ref(0)
 
 const showCursor = ref(false)
+
+provide('showCursor', showCursor)
 
 const cursorActived = ref(false)
 
@@ -156,6 +159,11 @@ onMounted(() => {
 watch(route, () => {
     enableBack.value = history.state.position > 1 && currentRouteName.value !== 'home'
     getRandomBg()
+})
+
+onBeforeUnmount(() => {
+    Bus.off('showCursor')
+    Bus.off('hideCursor')
 })
 
 const logo = computed(() => {
@@ -296,6 +304,13 @@ const getRandomBg = () => {
 onMounted(() => {
     getNoticeNum()
     initNoticeInterval()
+    Bus.on('showCursor', () => {
+        showCursor.value = true
+    })
+    Bus.on('hideCursor', () => {
+        console.log('hideCursor')
+        showCursor.value = false
+    })
 })
 
 onBeforeUnmount(() => {
@@ -309,7 +324,7 @@ onBeforeUnmount(() => {
     position: relative;
     width: 100vw;
     *{
-        cursor:none!important;
+        cursor:none;
     }
     &.isPixelTheme{
         .meow-layout-header-routes-item{
