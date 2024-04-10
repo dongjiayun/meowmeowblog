@@ -8,10 +8,13 @@
 > - WeChat: the same as mobile
 
 ## Personal Advantages:
-> Extensive experience in development. As the team leader, I was responsible for leading the construction of the pet management backend architecture, micro-frontendization, component libraries, and other infrastructure research and development work for Ping An盟宠. I also led the development of the SSR official website and the pet mall mini-program matrix. Additionally, I led the development of the pet H5 mall and various other projects. With years of hands-on experience, I have extensive practical knowledge.
-> Proficient in JavaScript, TypeScript, Vue2, Vue3, Nuxt.js, Sass, React18, Redux, WeChat mini-programs, and other development.
-> With rich experience in Jenkins and Nginx deployment, I can develop and deploy large-scale projects end-to-end.
-> Proficient in server-side development using Golang, MySQL, and Redis.
+> I am an experienced developer with a strong background in leading teams and architecting backend systems for Pet Alliance management platforms. I specialize in micro-frontends, component libraries, and have led the development of SSR (Server-Side Rendering) websites, such as Pet Alliance official websites. Additionally, I have led the development of Pet Alliance mini-program ecosystems, including the Pet Alliance shopping mini-program, and H5 mall projects.
+> JavaScript, TypeScript, Vue.js (both Vue 2 and Vue 3), Nuxt.js, and Sass.
+> React 18, Redux, less.
+> And extensive experience in developing applications using uni-app for WeChat mini-programs and other platforms.
+> Abundant experience in micro-frontends and in retrofitting projects with micro-frontends.
+> Deployment processes using Jenkins and Nginx, enabling me to handle the entire development and deployment lifecycle of large-scale projects effectively.
+> Backend development using Golang, MySQL, and Redis, enabling me to deliver robust server-side solutions.
 
 ---
 

@@ -11,7 +11,10 @@
 > 开发经验丰富。作为团队 leader 主导平安盟宠管理后台架构搭建，微前端化，组件库
 等基础研发工作。主导开发 ssr 官网。主导开发盟宠商城小程序等小程序矩阵。主导开
 发盟宠 h5 商城，等项目。长期工作于一线，实战经验丰富。
-> 熟练掌握JavaScript,TypeScript,Vue2,Vue3,Nuxt.js,Sass,React18,Redux,微信小程序等开发。
+> 熟练掌握JavaScript,TypeScript,Vue2,Vue3,Nuxt.js,Sass。
+> 熟练掌握React18,Redux,Less。
+> 熟练掌握uniapp 微信小程序等开发。
+> 拥有丰富的微前端,以及项目微前端改造经验。
 > 拥有丰富的jenkins以及nginx部署经验.可以全流程开发部署大型项目.
 > 熟练使用Golang, mysql, redis进行服务端开发
 
