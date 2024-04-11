@@ -208,11 +208,13 @@ const handleAdd = async() => {
         color: #FFAA2C;
         box-shadow:  var(--el-box-shadow-lighter);
         cursor: pointer;
+        z-index: 10;
     }
     &-refresh{
         position: fixed;
         top:220px;
         left: 40px;
+        z-index: 10;
     }
 }
 </style>
