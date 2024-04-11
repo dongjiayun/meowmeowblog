@@ -23,6 +23,16 @@
             <el-icon><Plus /></el-icon>
         </div>
     </Teleport>
+    <Teleport to="#layout">
+        <div
+            v-if="route.name === 'blog'"
+            class="blog-refresh"
+            :class="{ 'pixel-button': isPixel ,'blog-button': !isPixel }"
+            @click="init"
+        >
+            <div>{{ isPixel ? 'refresh' : '刷新' }}</div>
+        </div>
+    </Teleport>
 </template>
 <script lang="ts">
 export default {
@@ -31,7 +41,7 @@ export default {
 </script>
 <script setup lang="ts">
 import { articleModel, userModel } from '@/api'
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref, computed } from 'vue'
 import { pagination } from '@/mixins/pagination'
 import { ElLoading, ElMessage } from 'element-plus'
 import articleItem from '@/components/blog/articleItem.vue'
@@ -39,6 +49,8 @@ import { checkLogin } from '@/utils/auth'
 import { useRoute, useRouter } from 'vue-router'
 import Bus from '@/utils/bus'
 import { uniqBy } from 'lodash'
+import { useAppStore } from '@/stores/app'
+import { storeToRefs } from 'pinia'
 
 const props = defineProps<{
     cid?: string,
@@ -58,6 +70,11 @@ const route = useRoute()
 
 const list = ref<Article[]>([])
 
+const appStore = useAppStore()
+const { theme } = storeToRefs(appStore)
+
+const isPixel = computed(() => theme.value === 'pixel')
+
 onMounted(() => {
     init()
     Bus.on('refresh', init)
@@ -71,6 +88,10 @@ const init = () => {
     initPagination()
     list.value = []
     noMore.value = false
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    })
     getData()
 }
 
@@ -187,6 +208,11 @@ const handleAdd = async() => {
         color: #FFAA2C;
         box-shadow:  var(--el-box-shadow-lighter);
         cursor: pointer;
+    }
+    &-refresh{
+        position: fixed;
+        top:220px;
+        left: 40px;
     }
 }
 </style>

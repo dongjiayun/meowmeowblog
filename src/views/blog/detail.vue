@@ -385,6 +385,7 @@ const handleUser = () => {
         color: #FFAA2C;
         box-shadow:  var(--el-box-shadow-lighter);
         cursor: pointer;
+        z-index: 10;
         &.active{
             background: #FFAA2C;
             color: #fff;
