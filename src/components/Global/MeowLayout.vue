@@ -30,14 +30,14 @@
                     v-model="theme"
                     inline-prompt
                     active-text="pixelart"
-                    inactive-text="猫猫风格"
+                    inactive-text="清净模式"
                     style="--el-switch-on-color: #FFAA2C; --el-switch-off-color: #FFAA2C"
                     active-value="pixel"
                     inactive-value="cat"
                     @change="handleTheme"
                 />
             </div>
-            <div class="meow-layout-header-notice" @click="handleNotice">
+            <div v-if="token" class="meow-layout-header-notice" @click="handleNotice">
                 <el-badge
                     :value="noticeNum"
                     :max="99"
@@ -58,7 +58,7 @@
         <div :class="{ 'meow-layout-main': currentRouteName !== 'home' }">
             <slot />
         </div>
-        <el-backtop :bottom="60" />
+        <el-backtop style="z-index: 10;" :bottom="60" />
         <div
             v-if="enableBack"
             class="meow-layout-back"
