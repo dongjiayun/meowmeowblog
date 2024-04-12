@@ -26,7 +26,7 @@
         <div class="blog-detail-header" @click="handleUser">
             <el-image class="blog-detail-header-avatar" :src="avatar" />
             <div class="blog-detail-header-name">{{ authorName }}</div>
-            <div class="blog-detail-header-date">发表于 {{ moment(data?.createAt).format('YYYY-MM-DD HH:mm:ss') }}</div>
+            <div class="blog-detail-header-date">发表于 {{ moment(data?.createdAt).format('YYYY-MM-DD HH:mm:ss') }}</div>
         </div>
         <div class="blog-detail-info">
             <div v-if="liked" class="blog-detail-info-item">
