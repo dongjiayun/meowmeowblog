@@ -139,8 +139,12 @@ const init = () => {
 }
 
 const handleTagChange = (tagId: string) => {
-    checkedTags.value = []
-    checkedTags.value.push(tagId)
+    if (!checkedTags.value.includes(tagId)) {
+        checkedTags.value = []
+        checkedTags.value.push(tagId)
+    } else {
+        checkedTags.value = []
+    }
     searchForm.value.tagIds = checkedTags.value
     handleSearch()
 }
