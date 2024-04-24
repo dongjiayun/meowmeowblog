@@ -23,6 +23,17 @@
         <div class="blog-detail-title">
             {{ data?.title }}
         </div>
+        <el-divider />
+        <div class="blog-detail-tags">
+            <el-tag
+                v-for="item in tags"
+                :key="item.tagId"
+                class="blog-detail-tags-item"
+                type="primary"
+            >{{ item.label }}</el-tag>
+            <el-tag v-if="data?.isMarkdown" class="blog-detail-tags-item" type="primary">.md</el-tag>
+            <el-tag v-else class="blog-detail-tags-item" type="primary">h5</el-tag>
+        </div>
         <div class="blog-detail-header" @click="handleUser">
             <el-image class="blog-detail-header-avatar" :src="avatar" />
             <div class="blog-detail-header-name">{{ authorName }}</div>
@@ -122,6 +133,10 @@ const avatar = computed(() => {
 
 const authorName = computed(() => {
     return data.value?.author?.username || '匿名猫猫'
+})
+
+const tags = computed(() => {
+    return data.value?.tags || []
 })
 
 articleId.value = route.params.id
@@ -316,6 +331,14 @@ const handleUser = () => {
 
 <style scoped lang="scss">
 .blog-detail{
+    &-tags{
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 20px;
+        &-item{
+            margin-left: 10px;
+        }
+    }
     &-title{
         font-size: 24px;
         font-weight: bold;

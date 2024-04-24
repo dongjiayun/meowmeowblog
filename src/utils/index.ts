@@ -361,3 +361,41 @@ export const noticeJump = (data:Notice) => {
             })
     }
 }
+
+function getRandomRGBColor(): string {
+    const randomColor = () => Math.floor(Math.random() * 256) // 生成 0 到 255 之间的随机整数
+
+    // 生成随机的 R、G、B 分量
+    const r = randomColor()
+    const g = randomColor()
+    const b = randomColor()
+
+    // 将 RGB 分量转换为 CSS 颜色表示法
+    const color = `rgb(${r},${g},${b})`
+
+    return color
+}
+
+export function getMid80PercentColor(): string {
+    const color = getRandomRGBColor()
+
+    // 获取中间 80% 的颜色
+    const mid80Percent = Math.floor(255 * 0.1)
+    const [r, g, b] = color.match(/\d+/g)?.map(Number) || [0, 0, 0] // 从 RGB 字符串中提取各个分量
+
+    const midR = Math.max(Math.min(Math.round(r * 0.9 + mid80Percent), 255), 0) // 红色分量
+    const midG = Math.max(Math.min(Math.round(g * 0.9 + mid80Percent), 255), 0) // 绿色分量
+    const midB = Math.max(Math.min(Math.round(b * 0.9 + mid80Percent), 255), 0) // 蓝色分量
+
+    // 将 RGB 分量转换为 CSS 颜色表示法
+    const midColor = `rgb(${midR},${midG},${midB})`
+
+    return midColor
+}
+
+export type RandomButtonType = 'primary' | 'success' | 'warning' | 'danger' | 'info'
+export const getRandomButtonType = (): RandomButtonType => {
+    const typeMap:RandomButtonType[] = ['primary', 'success', 'warning', 'danger', 'info']
+    const randomIndex = Math.floor(Math.random() * typeMap.length)
+    return typeMap[randomIndex]
+}

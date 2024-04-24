@@ -84,6 +84,14 @@ const message = [
     }
 ]
 
+const tags = [
+    {
+        path: '/tags',
+        name: 'tags',
+        component: () => import('@/views/tags/index.vue')
+    }
+]
+
 const common = [
     {
         path: '/404',
@@ -104,6 +112,7 @@ const routes: Array<any> = [
     ...user,
     ...about,
     ...message,
+    ...tags,
     ...common
 ]
 

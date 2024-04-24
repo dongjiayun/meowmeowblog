@@ -10,6 +10,19 @@
                 </el-form-item>
             </el-form>
         </div>
+        <div class="editor-tags">
+            <div>标签:</div>
+            <el-check-tag
+                v-for="(item,index) in tags"
+                :key="index"
+                class="editor-tags-item"
+                type="primary"
+                :checked="checkedTags.includes(item.tagId)"
+                @change="handleTagChange(item.tagId)"
+            >
+                {{ item.label }}
+            </el-check-tag>
+        </div>
         <div class="editor-content">
             <div ref="inputRef" class="editor-input">
                 <el-input
@@ -36,7 +49,7 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue'
 // @ts-ignore
-import { articleModel, ArticleModel } from '@/api'
+import { articleModel, ArticleModel, tagModel } from '@/api'
 import { useRoute, useRouter } from 'vue-router'
 import { ElLoading, ElMessage } from 'element-plus'
 import markdown from '@/components/blog/markdown.vue'
@@ -46,6 +59,36 @@ const content = ref('')
 const form = ref({
     title: ''
 })
+
+const tags = ref<Tag[]>([])
+
+const checkedTags = ref<string[]>([])
+
+const getTags = () => {
+    const loading = ElLoading.service({
+        lock: true,
+        text: 'loading~'
+    })
+    const params = {
+        pageNo: 1,
+        pageSize: 10000
+    }
+    return tagModel.list(params).then(res => {
+        if (res.status === 0) {
+            tags.value = res.data.list
+        }
+    }).finally(() => {
+        loading.close()
+    })
+}
+
+const handleTagChange = (tagId: string) => {
+    if (checkedTags.value.includes(tagId)) {
+        checkedTags.value = checkedTags.value.filter(item => item !== tagId)
+    } else {
+        checkedTags.value.push(tagId)
+    }
+}
 
 const rules = ref({
     title: {
@@ -89,6 +132,7 @@ const getData = () => {
         if (res.status === 0) {
             content.value = res.data.content
             form.value.title = res.data.title
+            checkedTags.value = res.data.tags.map(item => item.tagId)
         } else {
             ElMessage({
                 type: 'error',
@@ -102,10 +146,12 @@ const getData = () => {
 
 const handleSubmit = async() => {
     await formRef.value.validate()
+    const selectedTags = tags.value.filter(item => checkedTags.value.includes(item.tagId))
     const params = {
         title: form.value.title,
         content: content.value,
-        isMarkdown: true
+        isMarkdown: true,
+        tags: selectedTags
     }
     if (isEdit) {
         // @ts-ignore
@@ -150,7 +196,8 @@ const handleTabKeyDown = (event, textarea) => {
 
 let textarea
 
-onMounted(() => {
+onMounted(async() => {
+    await getTags()
     if (isEdit) {
         getData()
     }
@@ -173,6 +220,15 @@ onUnmounted(() => {
 
 <style scoped lang="scss">
 .editor{
+    &-tags{
+        display: flex;
+        margin-bottom: 20px;
+        justify-content: flex-end;
+        align-items: center;
+        &-item{
+            margin-left: 10px;
+        }
+    }
     &-content{
         display: flex;
     }

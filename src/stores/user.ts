@@ -13,8 +13,11 @@ export const useUserStore = defineStore('user', {
         cid: '',
         username: '',
         avatar: '',
-        email: ''
+        email: '',
     }),
+    getters: {
+        isAdmin: state => state.cid === 'C000000000001',
+    },
     actions: {
         setUserInfo(data?: User) {
             if (data) {

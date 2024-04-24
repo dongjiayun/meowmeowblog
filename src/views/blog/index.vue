@@ -1,6 +1,31 @@
 <template>
     <div class="blog">
         <div class="blog-body">
+            <div class="blog-body-search">
+                <el-form inline>
+                    <el-form-item prop="keyword" label="搜索">
+                        <el-input
+                            v-model="searchForm.keyword"
+                            clearable
+                            placeholder="文章标题或标签"
+                            @clear="handleSearch"
+                        />
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @click="handleSearch">搜索</el-button>
+                    </el-form-item>
+                </el-form>
+            </div>
+            <div v-if="tags && tags.length > 0" class="blog-body-tags">
+                <el-check-tag
+                    v-for="(item,index) in tags"
+                    :key="index"
+                    class="blog-body-tags-item"
+                    type="primary"
+                    :checked="checkedTags.includes(item.tagId)"
+                    @change="handleTagChange(item.tagId)"
+                >{{ item.label }}</el-check-tag>
+            </div>
             <transition-group name="el-fade-in-linear" tag="article-item">
                 <article-item
                     v-for="(item,index) in list"
@@ -40,7 +65,7 @@ export default {
 }
 </script>
 <script setup lang="ts">
-import { articleModel, userModel } from '@/api'
+import { articleModel, userModel, tagModel } from '@/api'
 import { onBeforeUnmount, onMounted, ref, computed } from 'vue'
 import { pagination } from '@/mixins/pagination'
 import { ElLoading, ElMessage } from 'element-plus'
@@ -64,6 +89,23 @@ const {
     initPagination
 } = pagination()
 
+const tags = ref<Tag[]>([])
+
+const getTags = () => {
+    tagModel.list().then(res => {
+        if (res.status === 0) {
+            tags.value = res.data.list
+        }
+    })
+}
+
+const checkedTags = ref<string[]>([])
+
+const searchForm = ref({
+    keyword: '',
+    tagIds: []
+})
+
 const noMore = ref(false)
 
 const route = useRoute()
@@ -85,6 +127,28 @@ onBeforeUnmount(() => {
 })
 
 const init = () => {
+    getTags()
+    initPagination()
+    list.value = []
+    noMore.value = false
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    })
+    getData()
+}
+
+const handleTagChange = (tagId: string) => {
+    if (checkedTags.value.includes(tagId)) {
+        checkedTags.value = checkedTags.value.filter(item => item !== tagId)
+    } else {
+        checkedTags.value.push(tagId)
+    }
+    searchForm.value.tagIds = checkedTags.value
+    handleSearch()
+}
+
+const handleSearch = () => {
     initPagination()
     list.value = []
     noMore.value = false
@@ -97,6 +161,7 @@ const init = () => {
 
 const getData = () => {
     const params = {
+        ...searchForm.value,
         pageNo: pageNo.value,
         pageSize: pageSize.value
     }
@@ -188,6 +253,22 @@ const handleAdd = async() => {
 
 <style scoped lang="scss">
 .blog{
+    &-body{
+        &-search{
+            display: flex;
+            padding: 20px 0;
+            align-items: center;
+        }
+        &-tags{
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+            &-item{
+                margin-left: 10px;
+            }
+        }
+    }
     &-footer{
         display: flex;
         align-items: center;

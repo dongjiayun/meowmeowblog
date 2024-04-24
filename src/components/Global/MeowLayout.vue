@@ -16,7 +16,7 @@
                     :key="index"
                 >
                     <div
-                        v-if="item.route !== 'mine' || (item.route === 'mine' && token)"
+                        v-if="(item.route !== 'mine' || (item.route === 'mine' && token)) && (item.route !== 'tags' || (item.route === 'tags' && isAdmin))"
                         class="meow-layout-header-routes-item"
                         :class="{ active: currentRouteName === item.route }"
                         @click="$router.push({ name: item.route })"
@@ -113,8 +113,8 @@ import Bus from '@/utils/bus'
 const userStore = useUserStore()
 const appStore = useAppStore()
 
-const token = storeToRefs(userStore).token
-const theme = storeToRefs(appStore).theme
+const { token, isAdmin } = storeToRefs(userStore)
+const { theme } = storeToRefs(appStore)
 
 const route = useRoute()
 
@@ -189,6 +189,7 @@ const menusCat = [
     { name: '我的', route: 'mine' },
     { name: '关于', route: 'about' },
     { name: '简历', route: 'resume' },
+    { name: '标签', route: 'tags' },
 ]
 
 const menusPixel = [
@@ -198,6 +199,7 @@ const menusPixel = [
     { name: 'Mine', route: 'mine' },
     { name: 'About', route: 'about' },
     { name: 'Resumes', route: 'resume' },
+    { name: 'Tags', route: 'tags' },
 ]
 
 const menus = computed(() => {
@@ -402,7 +404,7 @@ onBeforeUnmount(() => {
     &-main{
         position: relative;
         left: 50%;
-        transform: translateX(-50%);
+        transform: translateX(-50%) scale(0.99);
         max-width: 1200px;
         margin: 40px;
         background: #fff;
@@ -410,6 +412,11 @@ onBeforeUnmount(() => {
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         padding: 20px;
         z-index: 10;
+        transition: all 0.3s;
+        &:hover,&:focus,&:active{
+            z-index: 200;
+            transform: translateX(-50%) scale(1);
+        }
     }
     &-back{
         position: fixed;

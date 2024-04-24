@@ -192,3 +192,21 @@ export const messageModel:ApiModel = {
         return deleteHttp(`/message/like/${messageId}`)
     }
 }
+
+export const tagModel:ApiModel = {
+    list() {
+        return post('/tag/get')
+    },
+    get(tagId) {
+        return get(`/tag/${tagId}`)
+    },
+    create(data) {
+        return post('/tag', data)
+    },
+    update(data) {
+        return put('/tag', data)
+    },
+    delete(tagId) {
+        return deleteHttp(`/tag/${tagId}`)
+    }
+}

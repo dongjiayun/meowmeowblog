@@ -7,6 +7,14 @@
                 <div class="article-item-info-header-name">{{ authorName }}</div>
                 <div class="article-item-info-header-date">发表于 {{ moment(data.createdAt).format('YYYY-MM-DD HH:mm:ss') }}</div>
             </div>
+            <div class="article-item-info-tags">
+                <el-tag
+                    v-for="item in data.tags"
+                    :key="item.tagId"
+                    class="article-item-info-tags-item"
+                    :type="getRandomButtonType()"
+                >{{ item.label }}</el-tag>
+            </div>
             <div class="article-item-info-title">{{ data.title }}</div>
             <div class="article-item-info-extendinfo">
                 <div class="article-item-info-extendinfo-item">
@@ -33,7 +41,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { getRandomCover, toThousandsNum } from '@/utils'
+import { getRandomButtonType, getRandomCover, toThousandsNum } from '@/utils'
 import moment from 'moment'
 import { useRouter } from 'vue-router'
 
@@ -79,6 +87,14 @@ const handleDetail = () => {
         flex: 1;
         display: flex;
         flex-direction: column;
+        &-tags{
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            &-item{
+                margin-left: 10px;
+            }
+        }
         &-header{
             display: flex;
             align-items: center;
