@@ -7,7 +7,7 @@
                         <el-input
                             v-model="searchForm.keyword"
                             clearable
-                            placeholder="文章标题或标签"
+                            placeholder="文章标题关键字"
                             @clear="handleSearch"
                         />
                     </el-form-item>
