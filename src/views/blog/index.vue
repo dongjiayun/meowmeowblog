@@ -139,11 +139,8 @@ const init = () => {
 }
 
 const handleTagChange = (tagId: string) => {
-    if (checkedTags.value.includes(tagId)) {
-        checkedTags.value = checkedTags.value.filter(item => item !== tagId)
-    } else {
-        checkedTags.value.push(tagId)
-    }
+    checkedTags.value = []
+    checkedTags.value.push(tagId)
     searchForm.value.tagIds = checkedTags.value
     handleSearch()
 }
@@ -161,7 +158,8 @@ const handleSearch = () => {
 
 const getData = () => {
     const params = {
-        ...searchForm.value,
+        keyword: searchForm.value.keyword.trim(),
+        tagId: searchForm.value.tagIds[0],
         pageNo: pageNo.value,
         pageSize: pageSize.value
     }
