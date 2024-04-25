@@ -68,12 +68,12 @@
             <el-icon v-if="!isPixel" :size="30" color="#FFAA2C"><ArrowLeft /></el-icon>
             <div>{{ isPixel ? 'Back' : '返回' }}</div>
         </div>
-        <view class="meow-layout-bottom">
-            <view class="meow-layout-bottom-item">喵喵喵</view>
-            <view class="meow-layout-bottom-item">沪ICP备2023031020号</view>
-            <view class="meow-layout-bottom-item">Copyright © {{ moment().format('YYYY') }}</view>
-        </view>
-        <view
+        <div class="meow-layout-bottom">
+            <div class="meow-layout-bottom-item">喵喵喵</div>
+            <div class="meow-layout-bottom-item">沪ICP备2023031020号</div>
+            <div class="meow-layout-bottom-item">Copyright © {{ moment().format('YYYY') }}</div>
+        </div>
+        <div
             v-if="showCursor"
             class="meow-layout-cursor"
             :style="{
@@ -86,11 +86,11 @@
                 :class="{ cursorActived }"
                 :src="getSrc('base/pixel_rocket.png')"
             />
-        </view>
-        <view v-if="!isHome" class="meow-layout-trinket" />
-        <view v-if="isPixel && !isHome" class="meow-layout-tetris">
+        </div>
+        <div v-if="!isHome" class="meow-layout-trinket" />
+        <div v-if="isPixel && !isHome" class="meow-layout-tetris">
             <tetris />
-        </view>
+        </div>
     </div>
 </template>
 
