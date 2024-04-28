@@ -303,6 +303,11 @@ onBeforeMount(() => {
 
 <style scoped lang="scss">
 .blog-resume-list{
-
+    min-height: 60vh;
+    &-pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
 }
 </style>
