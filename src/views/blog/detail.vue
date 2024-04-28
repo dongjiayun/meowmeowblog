@@ -13,7 +13,7 @@
                     <el-image
                         :preview-src-list="covers.map(i => i.fileUrl)"
                         style="height: 600px"
-                        fit="contain"
+                        fit="cover"
                         :src="item?.fileUrl"
                         preview-teleported
                     />

@@ -1,9 +1,9 @@
 <template>
     <div class="article-item" @click="handleDetail">
-        <el-image class="article-item-cover" :src="cover" />
+        <el-image v-if="props?.data?.covers?.[0]?.fileUrl" class="article-item-cover" :src="cover" />
         <div class="article-item-info">
             <div class="article-item-info-header">
-                <el-image :src="avatar" class="article-item-info-header-avatar" />
+                <el-image fit="cover" :src="avatar" class="article-item-info-header-avatar" />
                 <div class="article-item-info-header-name">{{ authorName }}</div>
                 <div class="article-item-info-header-date">发表于 {{ moment(data.createdAt).format('YYYY-MM-DD HH:mm:ss') }}</div>
             </div>
