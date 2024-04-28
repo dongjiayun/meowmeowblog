@@ -210,3 +210,21 @@ export const tagModel:ApiModel = {
         return deleteHttp(`/tag/${tagId}`)
     }
 }
+
+export const resumeModel:ApiModel = {
+    list(data) {
+        return post('/resume/get', data)
+    },
+    get(resumeId) {
+        return get(`/resume/${resumeId}`)
+    },
+    create(data) {
+        return post('/resume', data)
+    },
+    update(data) {
+        return put('/resume', data)
+    },
+    delete(resumeId) {
+        return deleteHttp(`/resume/${resumeId}`)
+    }
+}

@@ -16,7 +16,10 @@
                     :key="index"
                 >
                     <div
-                        v-if="(item.route !== 'mine' || (item.route === 'mine' && token)) && (item.route !== 'tags' || (item.route === 'tags' && isAdmin))"
+                        v-if="(item.route !== 'mine' || (item.route === 'mine' && token)) &&
+                            (item.route !== 'tags' || (item.route === 'tags' && isAdmin)) &&
+                            (item.route !== 'resume-admin' || (item.route === 'resume-admin' && isAdmin))
+                        "
                         class="meow-layout-header-routes-item"
                         :class="{ active: currentRouteName === item.route }"
                         @click="$router.push({ name: item.route })"
@@ -190,6 +193,7 @@ const menusCat = [
     { name: '关于', route: 'about' },
     { name: '简历', route: 'resume' },
     { name: '标签', route: 'tags' },
+    { name: '简历管理', route: 'resume-admin' },
 ]
 
 const menusPixel = [
@@ -200,6 +204,7 @@ const menusPixel = [
     { name: 'About', route: 'about' },
     { name: 'Resumes', route: 'resume' },
     { name: 'Tags', route: 'tags' },
+    { name: 'Resumes Admin', route: 'resume-admin' },
 ]
 
 const menus = computed(() => {

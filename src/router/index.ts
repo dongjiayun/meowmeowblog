@@ -44,6 +44,11 @@ const resume = [
         path: '/resume',
         name: 'resume',
         component: () => import('@/views/resume/index.vue')
+    },
+    {
+        path: '/resume/admin',
+        name: 'resume-admin',
+        component: () => import('@/views/resume/list.vue')
     }
 ]
 

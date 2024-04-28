@@ -43,7 +43,7 @@
                 label-width="80px"
                 @submit.prevent
             >
-                <el-form-item label="标签名">
+                <el-form-item prop="label" label="标签名">
                     <el-input
                         v-model="createForm.label"
                         placeholder="请输入标签名"
@@ -72,7 +72,7 @@
                 label-width="80px"
                 @submit.prevent
             >
-                <el-form-item label="标签名">
+                <el-form-item prop="label" label="标签名">
                     <el-input
                         v-model="updateForm.label"
                         placeholder="请输入标签名"
@@ -137,6 +137,9 @@ const rules = ref({
 })
 
 const handleCreate = () => {
+    createForm.value = {
+        label: '',
+    }
     showCreateTag.value = true
 }
 

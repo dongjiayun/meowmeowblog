@@ -110,3 +110,12 @@ declare interface Message extends Model {
     author : SafeUser
     likeIds : Ids
 }
+
+declare interface Resume extends Model {
+    resumeId : string
+    content : string
+    version : number
+    language : string
+}
+
+declare type Resumes = Array<Resume>

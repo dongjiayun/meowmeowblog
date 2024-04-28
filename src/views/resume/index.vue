@@ -59,7 +59,9 @@ import { useRoute, useRouter } from 'vue-router'
 // @ts-ignore
 import FileSaver from 'file-saver'
 import { useAppStore } from '@/stores/app'
+import { useUserStore } from '@/stores/user'
 import { storeToRefs } from 'pinia'
+import { resumeModel } from '@/api'
 
 const route = useRoute()
 
@@ -83,18 +85,31 @@ const isPixel = computed(() => {
     return theme.value === 'pixel'
 })
 
+const resumes = ref<Resumes>([])
+
+const loading = ref(false)
+
+const userStore = useUserStore()
+
+const { isAdmin } = storeToRefs(userStore)
+
 const getContent = async() => {
     hasPassed.value = true
-    const response = await fetch(getSrc(lang.value === 'zh' ? 'docs/resume.md' : 'docs/resume-en.md'))
-    if (response.ok) {
-        const data = await response.text()
-        content.value = markdown.render(data)
-    } else {
-        console.error('Failed to fetch markdown file')
-    }
+    // const response = await fetch(getSrc(lang.value === 'zh' ? 'docs/resume.md' : 'docs/resume-en.md'))
+    // if (response.ok) {
+    //     const data = await response.text()
+    //     content.value = markdown.render(data)
+    // } else {
+    //     console.error('Failed to fetch markdown file')
+    // }
+    await getResumes()
+    content.value = markdown.render(resumes.value.find(i => lang.value === i.language).content ?? '')
 }
 
 const checkPassword = () => {
+    if (isAdmin.value) {
+        return getContent()
+    }
     if (hasPassed.value) {
         return getContent()
     }
@@ -102,6 +117,24 @@ const checkPassword = () => {
     const password = MD5(secret + moment().format('MMDD')).toString()
     if (routePassword && (routePassword === password || routePassword === 'SpecialPrivilege')) {
         return getContent()
+    }
+}
+
+const getResumes = () => {
+    const params = {
+        isLatest: true,
+    }
+    loading.value = true
+    if (resumes.value.length) {
+        return Promise.resolve(resumes.value)
+    } else {
+        return resumeModel.list(params).then(res => {
+            if (res.status === 0) {
+                resumes.value = res.data.list
+            }
+        }).finally(() => {
+            loading.value = false
+        })
     }
 }
 
