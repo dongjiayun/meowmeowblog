@@ -11,7 +11,11 @@
                 <el-table :data="resumes">
                     <el-table-column width="400px" label="id" prop="resumeId" />
                     <el-table-column label="版本" prop="version" />
-                    <el-table-column label="语言" prop="language" />
+                    <el-table-column label="语言" prop="language">
+                        <template #default="{ row }">
+                            {{ languageMap.find(item => row?.language === item.value).label }}
+                        </template>
+                    </el-table-column>
                     <el-table-column
                         v-slot="{ row }"
                         label="创建时间"
@@ -48,7 +52,7 @@
         <el-dialog
             v-model="showCreate"
             append-to-body
-            title="新增标签"
+            title="新增简历"
             draggable
             destroy-on-close
         >
@@ -85,7 +89,7 @@
         <el-dialog
             v-model="showUpdate"
             append-to-body
-            title="编辑标签"
+            title="编辑简历"
             draggable
             destroy-on-close
         >
@@ -225,7 +229,7 @@ const handleUpdate = (resume: Resume) => {
 
 const handleDelete = (resume: Resume) => {
     ElMessageBox.confirm(
-        '此操作将永久删除该标签, 是否继续?',
+        '此操作将永久删除该简历, 是否继续?',
     ).then(() => {
         const loading = ElLoading.service({
             lock: true,
