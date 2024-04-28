@@ -39,7 +39,7 @@
                         </template>
                     </el-table-column>
                 </el-table>
-                <div class="blog-tags-pagination">
+                <div class="blog-resume-list-pagination">
                     <el-pagination
                         v-model:current-page="pageNo"
                         :page-size="pageSize"
