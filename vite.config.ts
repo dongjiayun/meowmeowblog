@@ -13,8 +13,8 @@ export default defineConfig({
         port: 3100,
         proxy: {
             '/api': {
-                // target: 'https://www.meowmeowmeow.cn',
-                target: 'http://localhost:2000',
+                target: 'https://www.meowmeowmeow.cn',
+                // target: 'http://localhost:2000',
                 changeOrigin: true,
                 rewrite: path => path.replace(/^\/api/, ''),
             }
