@@ -14,6 +14,8 @@
                     class="article-item-info-tags-item"
                     :type="getRandomButtonType()"
                 >{{ item.label }}</el-tag>
+                <el-tag v-if="data.isMarkdown" class="article-item-info-tags-item" type="primary">.md</el-tag>
+                <el-tag v-else class="article-item-info-tags-item" type="primary">h5</el-tag>
             </div>
             <div class="article-item-info-title">{{ data.title }}</div>
             <div class="article-item-info-extendinfo">
