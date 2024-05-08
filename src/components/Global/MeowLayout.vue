@@ -418,6 +418,7 @@ onBeforeUnmount(() => {
         padding: 20px;
         z-index: 10;
         transition: all 0.3s;
+        transform-origin: center top;
         &:hover,&:focus,&:active{
             z-index: 30;
             transform: translateX(-50%) scale(1);
