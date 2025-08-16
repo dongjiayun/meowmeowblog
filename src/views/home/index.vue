@@ -29,18 +29,18 @@ import { useRouter } from 'vue-router'
 import { useAppStore } from '@/stores/app'
 import { storeToRefs } from 'pinia'
 import capsule from '@/components/trinkets/capsule.vue'
+import {getSrc} from "@/utils";
 
 const list = ref([
-    'https://qa-res.ipetapi.com/meowmeowmeow/1.gif',
-    'https://qa-res.ipetapi.com/meowmeowmeow/2.gif',
-    'https://qa-res.ipetapi.com/meowmeowmeow/3.gif',
-    'https://qa-res.ipetapi.com/meowmeowmeow/4.gif',
-    'https://qa-res.ipetapi.com/meowmeowmeow/5.gif',
-    'https://qa-res.ipetapi.com/meowmeowmeow/6.gif',
-    'https://qa-res.ipetapi.com/meowmeowmeow/7.gif',
-    'https://qa-res.ipetapi.com/meowmeowmeow/8.gif',
-    'https://qa-res.ipetapi.com/meowmeowmeow/9.gif',
-    'https://qa-res.ipetapi.com/meowmeowmeow/10.gif',
+    getSrc('home/cats/1.jpeg'),
+    getSrc('home/cats/2.jpeg'),
+    getSrc('home/cats/3.jpeg'),
+    getSrc('home/cats/5.jpeg'),
+    getSrc('home/cats/6.jpeg'),
+    getSrc('home/cats/7.jpeg'),
+    getSrc('home/cats/8.jpeg'),
+    getSrc('home/cats/9.jpeg'),
+    getSrc('home/cats/10.jpeg')
 ])
 
 const appStore = useAppStore()
@@ -92,8 +92,8 @@ const handleBlog = () => {
         &-item{
             position: relative;
             left: -200px;
-            top:-300px;
-            width: 500px;
+            top:200px;
+            width: 15%;
             flex-shrink: 0;
             height:calc(100vh + 1000px);
             transform: rotate(15deg);
