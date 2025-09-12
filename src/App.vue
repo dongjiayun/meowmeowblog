@@ -27,12 +27,12 @@ const route = useRoute()
 const keepAlive = ref(['Blog', 'Resume'])
 const handleResize = () => {
     if (window.self !== window.top) {
-        window.location.href = 'https://club.meowmeowmeow.cn'
+        window.location.href = 'https://h5.djydjydjy.top'
         return
     }
     const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
     if (width < 768) {
-        window.location.href = 'https://club.meowmeowmeow.cn'
+        window.location.href = 'https://h5.djydjydjy.top'
     }
 }
 

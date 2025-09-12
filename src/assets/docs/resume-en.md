@@ -110,4 +110,4 @@
 
 ## Personal homepage
 > - [github: https://github.com/dongjiayun](https://github.com/dongjiayun)
-> - [Personal Blog: https://club.meowmeowmeow.cn](https://club.meowmeowmeow.cn)
+> - [Personal Blog: https://blog.djydjydjy.top](https://blog.djydjydjy.top)
