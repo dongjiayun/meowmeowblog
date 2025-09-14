@@ -202,7 +202,8 @@ const handleShare = () => {
     const { href } = router.resolve({
         name: 'resume',
         query: {
-            password: MD5(resumeKey).toString()
+            password: MD5(resumeKey).toString(),
+            lang: lang.value
         }
     })
     copy(window.origin + href, '复制成功')
