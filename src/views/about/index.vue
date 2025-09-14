@@ -22,9 +22,15 @@
             <div class="copy" @click="handleJump('https://github.com/dongjiayun/meowmeowblog')">前端桌面端源代码</div>
             <div class="copy" @click="handleJump('https://github.com/dongjiayun/pet-family-server.git')">服务端源代码</div>
             <div>喜欢的朋友记得 ➕ ⭐️⭐️⭐️</div>
-        </div>
-        <div v-if="isPixel" class="meow-about-ornament">
-            <pikachu />
+            <div>2024.1</div>
+            <div>--------------------- 分割线 ---------------------</div>
+            <div>时光荏苒,一晃就是2个春秋.这两年事业也遇到了十字路口.</div>
+            <div>家庭也迎来了新成员,人生也有了新的身份</div>
+            <div>时隔2年重新启用该博客,愿一切越来越好</div>
+            <div>2025.9</div>
+            <div v-if="isPixel" class="meow-about-ornament">
+                <pikachu />
+            </div>
         </div>
     </div>
 </template>
