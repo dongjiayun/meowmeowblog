@@ -73,7 +73,7 @@
         </div>
         <div class="meow-layout-bottom">
             <div class="meow-layout-bottom-item">喵喵喵</div>
-            <div class="meow-layout-bottom-item">沪ICP备2023031020号</div>
+            <div class="meow-layout-bottom-item">沪ICP备2023031020号-3</div>
             <div class="meow-layout-bottom-item">Copyright © {{ moment().format('YYYY') }}</div>
         </div>
         <div
