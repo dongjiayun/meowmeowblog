@@ -75,7 +75,7 @@ const content = ref('')
 
 const hasPassed = ref(false)
 
-const lang = ref('zh')
+const lang = route.query?.lang || ref('zh')
 
 const appStore = useAppStore()
 
