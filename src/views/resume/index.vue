@@ -114,7 +114,7 @@ const checkPassword = () => {
         return getContent()
     }
     const secret = resumeKey
-    const password = MD5(secret + moment().format('MMDD')).toString()
+    const password = MD5(secret).toString()
     if (routePassword && (routePassword === password || routePassword === 'SpecialPrivilege')) {
         return getContent()
     }
@@ -140,7 +140,7 @@ const getResumes = () => {
 
 const handleCheckPassword = () => {
     const secret = resumeKey
-    const password = MD5(secret + moment().format('MMDD')).toString()
+    const password = MD5(secret).toString()
     return new Promise(resolve => {
         ElMessageBox.prompt('请输入邀请码', '邀请码', {
             confirmButtonText: '确认',
@@ -202,10 +202,10 @@ const handleShare = () => {
     const { href } = router.resolve({
         name: 'resume',
         query: {
-            password: MD5(resumeKey + moment().format('MMDD')).toString()
+            password: MD5(resumeKey).toString()
         }
     })
-    copy(window.origin + href, '复制成功,链接一日内有效')
+    copy(window.origin + href, '复制成功')
 }
 
 const handleChangeLang = () => {
