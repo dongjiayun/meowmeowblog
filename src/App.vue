@@ -32,7 +32,15 @@ const handleResize = () => {
     }
     const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
     if (width < 768) {
-        window.location.href = 'https://h5.djydjydjy.top'
+        const url = window.location.href
+        if (url.includes('resumes')) {
+            const urlParams = new URLSearchParams(window.location.search)
+            const password = urlParams.get('password') || ''
+            const lang = urlParams.get('lang') || ''
+            window.location.href = `https://h5.djydjydjy.top/pages/resumes/index?password=${password}&lang=${lang}`
+        } else {
+            window.location.href = 'https://h5.djydjydjy.top'
+        }
     }
 }
 
