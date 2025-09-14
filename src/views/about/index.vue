@@ -27,6 +27,9 @@
             <div>时光荏苒,一晃就是2个春秋.这两年事业也遇到了十字路口.</div>
             <div>家庭也迎来了新成员,人生也有了新的身份</div>
             <div>时隔2年重新启用该博客,愿一切越来越好</div>
+            <div>再贴几个最新项目,旧活新整,朝花夕拾.新瓶装旧酒,用新技术套用成熟架构,开发新项目.也有了很多新的理解</div>
+            <div class="copy" @click="handleJump('https://github.com/dongjiayun/pet-shop-server.git')">基于golang的宠物店后台</div>
+            <div class="copy" @click="handleJump('https://github.com/dongjiayun/pet-shop-app.git')">基于vue3的uniapp小程序</div>
             <div>2025.9</div>
             <div v-if="isPixel" class="meow-about-ornament">
                 <pikachu />
