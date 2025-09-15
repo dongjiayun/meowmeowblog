@@ -24,13 +24,20 @@
             <div>喜欢的朋友记得 ➕ ⭐️⭐️⭐️</div>
             <div>2024.1</div>
             <div>--------------------- 分割线 ---------------------</div>
+            <div>后记</div>
+            <div>社区最后只有一个用户,那就当个人博客用了</div>
+            <div>不过其完整社区功能,全栈开发过程确实是一段十分精彩的体验</div>
+            <div>加上了一些华而不实的炫技功能,不过在这个前端式微的时代,未来应该需要向ai agency方向发展</div>
+            <div>再说吧</div>
+            <div>2024.4</div>
+            <div>--------------------- 分割线 ---------------------</div>
             <div>时光荏苒,一晃就是2个春秋.这两年事业也遇到了十字路口.</div>
             <div>家庭也迎来了新成员,人生也有了新的身份</div>
             <div>时隔2年重新启用该博客,愿一切越来越好</div>
             <div>再贴几个最新项目,旧活新整,朝花夕拾.新瓶装旧酒,用新技术套用成熟架构,开发新项目.也有了很多新的理解</div>
-            <div>ps:由于更换了oss,之前的图片都不能访问了</div>
             <div class="copy" @click="handleJump('https://github.com/dongjiayun/pet-shop-server.git')">基于golang的宠物店后台</div>
             <div class="copy" @click="handleJump('https://github.com/dongjiayun/pet-shop-app.git')">基于vue3的uniapp宠物店小程序</div>
+            <div>ps:由于更换了oss,之前的图片都不能访问了</div>
             <div>2025.9</div>
             <div v-if="isPixel" class="meow-about-ornament">
                 <pikachu />
